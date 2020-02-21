@@ -5,55 +5,6 @@ class Product
 {
 
     /**
-     * @var int $id
-     */
-    public $id;
-
-    /**
-     * @var string $name
-     */
-    public $name;
-
-    /**
-     * @var string $description
-     */
-    public $description;
-
-    /**
-     * @var number $price
-     */
-    public $price;
-
-    /**
-     * @var string $ean
-     */
-    public $ean;
-
-    /**
-     * @var string $release_date
-     */
-    public $release_date;
-
-    /**
-     * @var boolean $sale
-     */
-    public $sale;
-
-    /**
-     * @var Stock $stock
-     */
-    public $stock;
-
-    /**
-     * @var string $edited_at
-     */
-    public $edited_at;
-    /**
-     * @var object
-     */
-    public $products;
-
-    /**
      * @param array $data
      * @throws Exception
      */
@@ -63,7 +14,7 @@ class Product
 
         try {
 
-            $pdo = new PDO(DB::DSN, DB::USERNAME, DB::PASSWORD);
+            $pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";port=".  $_ENV['DB_PORT'] .";dbname=" . $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $query = "INSERT INTO products (name, description, price, ean, release_date, sale) ";
@@ -95,7 +46,7 @@ class Product
 
     public function getAll()
     {
-        $pdo = new PDO(DB::DSN, DB::USERNAME, DB::PASSWORD);
+        $pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";port=".  $_ENV['DB_PORT'] .";dbname=" . $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $query = "SELECT *  ";
@@ -104,11 +55,13 @@ class Product
         $stmt = $pdo->prepare($query);
         $stmt->execute();
 
-        $stmt->setFetchMode(PDO::FETCH_CLASS);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
-        $this->products = $stmt->fetchAll();
+        $debug = 1;
 
-        return $this->products;
+        $data = $stmt->fetchAll();
+
+        return $data;
     }
 
 
