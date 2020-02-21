@@ -1,0 +1,34 @@
+{
+  "name": "multiversum",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev src/",
+    "build": "next build src/",
+    "start": "next start dist/",
+    "lint": "yarn lint:es && yarn lint:prettier",
+    "lint:es": "eslint src/**/*.{ts,tsx}",
+    "lint:prettier": "prettier --list-different \"./**/**/*.{ts,tsx,js,json,md}\" \"!./dist/**/*.*\" \"!./src/client/.next/**/*.*\"",
+    "lint:fix": "yarn lint:es --fix && yarn lint:prettier --write"
+  },
+  "dependencies": {
+    "@chakra-ui/core": "^0.5.2",
+    "@emotion/core": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
+    "axios": "^0.19.2",
+    "emotion-theming": "^10.0.27",
+    "next": "9.2.2",
+    "react": "16.12.0",
+    "react-dom": "16.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.7.2",
+    "@types/react": "^16.9.20",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.18.3",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.5"
+  }
+}
