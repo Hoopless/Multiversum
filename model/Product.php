@@ -48,6 +48,10 @@ class Product
      * @var string $edited_at
      */
     public $edited_at;
+    /**
+     * @var object
+     */
+    public $products;
 
     /**
      * @param array $data
@@ -57,7 +61,7 @@ class Product
     {
 
 
-        try{
+        try {
 
             $pdo = new PDO(DB::DSN, DB::USERNAME, DB::PASSWORD);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -80,13 +84,31 @@ class Product
 
 
             foreach ($stmt->fetchAll() as $key => $value) {
-                echo  $value->firstname;
+                echo $value->firstname;
             }
 
         } catch (PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
 
+    }
+
+    public function getAll()
+    {
+        $pdo = new PDO(DB::DSN, DB::USERNAME, DB::PASSWORD);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $query = "SELECT *  ";
+        $query .= "FROM products";
+
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS);
+
+        $this->products = $stmt->fetchAll();
+
+        return $this->products;
     }
 
 
