@@ -29,5 +29,15 @@ switch ($url[0]) {
         }
         break;
 
+    case "":
+        require "./view/build/index.html";
+        break;
 
+    default:
+        $assetURL = "./view/build/{$url[0]}";
+        if (file_exists($assetURL)) {
+            require $assetURL;
+        } else {
+            require "./view/build/index.html";
+        }
 }

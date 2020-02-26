@@ -1,5 +1,6 @@
 .env
-vendor/*
+vendor/
 node_modules/
 .next/
 .DS_Store
+build/
