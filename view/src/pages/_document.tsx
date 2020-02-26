@@ -10,7 +10,7 @@ class CustomDocument extends Document {
 
         <Html>
         <Head>
-          <link href="https://fonts.googleapis.com/css?family=Quicksand:300&display=swap" rel="stylesheet" />
+          <link href='https://fonts.googleapis.com/css?family=Quicksand:300&display=swap' rel='stylesheet' />
           <link rel='icon' type='image/png' href='/img/logo.png' />
         </Head>
         <body>
