@@ -36,8 +36,11 @@ switch ($url[0]) {
     default:
         $assetURL = "./view/build/{$url[0]}";
         if (file_exists($assetURL)) {
+            $contentType = mime_content_type($assetURL);
+            header("Content-Type: {$contentType}");
+
             require $assetURL;
         } else {
-            require "./view/build/index.html";
+            require './view/build/index.html';
         }
 }
