@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Header from '../components/Header'
 
 const HomePage = () => (
   <>
@@ -7,7 +8,7 @@ const HomePage = () => (
     </Head>
 
     <>
-      <h3>test</h3>
+      <Header />
     </>
   </>
 )
