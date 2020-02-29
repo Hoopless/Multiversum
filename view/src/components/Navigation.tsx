@@ -22,7 +22,7 @@ const navigationItems: {
 const Navigation: FC = () => (
   <Flex w='100%' pt='1rem'>
     {navigationItems.map(navigationItem => (
-      <Box pr='20px' color='gray.500'>
+      <Box pr='40px' color='gray.500'>
         <a href={navigationItem.path}>{navigationItem.name}</a>
       </Box>
     ))}

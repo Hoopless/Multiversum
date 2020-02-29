@@ -51,6 +51,7 @@ const Header: FC = () => (
             pr='30px'
             borderRadius='20px'
             variant='outline'
+            bg="white"
             placeholder='Zoek hioer uw tering product'
             size='sm'
           />
