@@ -2,6 +2,9 @@ import { theme } from '@chakra-ui/core'
 
 const MultiversumTheme = {
   ...theme,
+  icons: {
+    ...theme.icons,
+  },
   fonts: {
     heading: 'Quicksand, sans-serif',
     body   : 'Quicksand, system-ui, sans-serif',
