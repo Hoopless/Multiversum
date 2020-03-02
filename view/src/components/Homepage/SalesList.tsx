@@ -11,7 +11,7 @@ const SalesList: FC = () => {
   const { data } = useSWR('/products?sales=true&limit=6', swrFetcherJSON)
 
   return (
-    <Slider prevArrow={<SliderArrow to='chevron-left' />} nextArrow={<SliderArrow to='chevron-right' />} infinite={true} slidesToShow={3}>
+    <Slider autoplay autoplaySpeed={4000} prevArrow={<SliderArrow to='chevron-left' />} nextArrow={<SliderArrow to='chevron-right' />} infinite={true} slidesToShow={3}>
       {data &&
         data.map((product: ConsumerProduct) => (
           <Flex justifyItems='center'>
