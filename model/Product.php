@@ -55,13 +55,17 @@ class Product
             $query = "SELECT *  ";
             $query .= "FROM products ";
 
-            $sales = isset($_GET["sales"]) ? (boolean)$_GET["sales"] : false;
+            $sales = isset($_GET["sales"]) ? (boolean)$_GET["sales"] : NULL;
 
-            if ($sales) {
-                $query .= "WHERE in_sale = TRUE ";
-            } else {
-                $query .= "WHERE in_sale = FALSE ";
+            if (! is_null($sales) ) {
 
+                if ($sales) {
+                    $query .= "WHERE in_sale = TRUE ";
+
+                } else {
+                    $query .= "WHERE in_sale = FALSE ";
+
+                }
             }
 
             $limit = isset($_GET["limit"]) ? (int)$_GET["limit"] : 0;

@@ -19,6 +19,7 @@ class ProductController
                 'id'    => $product['id'],
                 'name'  => $product['name'],
                 'price' => (float) $product['price'],
+                'in_sale' => (boolean) $product['in_sale'],
                 'image_url' => $product['image_url'],
             ];
         }
