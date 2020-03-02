@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import { Flex, Text } from '@chakra-ui/core'
 import Footer from '../components/Footer'
 
-const ContactPage = () => (
+const AVPage = () => (
     <>
         <Head>
             <title>Algemene Voorwaarden</title>
@@ -100,4 +100,4 @@ const ContactPage = () => (
     </>
 )
 
-export default ContactPage
+export default AVPage
