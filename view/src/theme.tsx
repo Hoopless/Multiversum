@@ -26,10 +26,10 @@ const MultiversumTheme = {
     lg   : '1.5rem',
     xl   : '2rem',
     '2xl': '3rem',
-    "3xl": "1.875rem",
-    "4xl": "2.25rem",
-    "5xl": "3rem",
-    "6xl": "4rem"
+    '3xl': '1.875rem',
+    '4xl': '2.25rem',
+    '5xl': '3rem',
+    '6xl': '4rem'
   }
 }
 

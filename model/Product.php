@@ -17,6 +17,7 @@ class Product
             $pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";port=".  $_ENV['DB_PORT'] .";dbname=" . $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+
             $query = "INSERT INTO products (name, description, price, ean, release_date, sale) ";
             $query .= "VALUES (:name, :description, :price, :ean, :release_date, :sale)";
 
@@ -46,20 +47,39 @@ class Product
 
     public function getAll()
     {
-        $pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";port=".  $_ENV['DB_PORT'] .";dbname=" . $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        try {
 
-        $query = "SELECT *  ";
-        $query .= "FROM products";
+            $pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";port=".  $_ENV['DB_PORT'] .";dbname=" . $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $pdo->prepare($query);
-        $stmt->execute();
+            $query = "SELECT *  ";
+            $query .= "FROM products ";
 
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $sales = isset($_GET["sales"]) ? (boolean)$_GET["sales"] : false;
 
-        $debug = 1;
+            if ($sales) {
+                $query .= "WHERE in_sale = TRUE ";
+            }
 
-        $data = $stmt->fetchAll();
+            $limit = isset($_GET["limit"]) ? (int)$_GET["limit"] : 0;
+
+            if ($limit > 0) {
+                $query .= "LIMIT {$limit} ";
+            }
+
+
+
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+            $debug = 1;
+
+            $data = $stmt->fetchAll();
+        } catch (PDOException $e) {
+            throw new \PDOException($e->getMessage(), (int)$e->getCode());
+        }
 
         return $data;
     }

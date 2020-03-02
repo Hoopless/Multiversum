@@ -11,9 +11,9 @@ $base_uri = "api/v1";
 $trimmed_url = trim($request, '/');
 $url         = explode('?', $trimmed_url, 2);
 
-
 $debug = $base_uri . "/products";
 
+header('Access-Control-Allow-Origin: *');
 switch ($url[0]) {
     case $base_uri . "/products":
         require 'controller/ProductController.php';

@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import styled from 'styled-components'
 import Navigation from './Navigation'
 import {
   Flex,
@@ -24,7 +23,7 @@ const Header: FC = () => (
       alignItems='center'
       justifyContent='center'
     >
-      <Image size='40%' src='./img/logo.png' alt='Je tering moeder' />
+      <Image size='40%' src='./img/logo.png' alt='Multiversum Logo' />
       <Box
         fontSize='md'
         color='gray.500'
@@ -51,8 +50,8 @@ const Header: FC = () => (
             pr='30px'
             borderRadius='20px'
             variant='outline'
-            bg="white"
-            placeholder='Zoek hioer uw tering product'
+            bg='white'
+            placeholder='Zoek hier uw product'
             size='sm'
           />
           <InputRightElement

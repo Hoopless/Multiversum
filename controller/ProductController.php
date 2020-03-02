@@ -18,7 +18,8 @@ class ProductController
             $pushed_data[] = [
                 'id'    => $product['id'],
                 'name'  => $product['name'],
-                'price' => $product['price'],
+                'price' => (float) $product['price'],
+                'image_url' => $product['image_url'],
             ];
         }
 

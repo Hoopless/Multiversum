@@ -11,17 +11,17 @@ const footerItems: {
   },
   {
     name: 'Leveringsvoorwaarden',
-    path: '/products',
+    path: '/leveringsvoorwaarden',
   },
   {
     name: 'Contact',
-    path: '/',
+    path: '/contact',
   }
 ]
 
 const Footer: FC = () => (
   <Flex w='100%' bg='main' py='0.4rem'>
-    <Flex width={['100%', '100%', '992px', '992px']} mx='auto'>
+    <Flex width={['100%', '100%', '1680px', '1680px']} mx='auto'>
       <Flex
         d={['none', 'flex', 'flex', 'flex']}
         w='100%'
@@ -41,7 +41,7 @@ const Footer: FC = () => (
 
       <Flex direction='row-reverse' w='100%' my='auto' >
         {footerItems.map(footerItem => (
-          <Box pr='20px' color='white' fontSize='0.75rem'>
+          <Box key={footerItem.name} pr='20px' color='white' fontSize='0.75rem'>
             <a href={footerItem.path}>{footerItem.name}</a>
           </Box>
         ))}
