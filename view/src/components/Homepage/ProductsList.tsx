@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { ConsumerProduct } from '../../types/product'
 import ProductCard from './ProductCard'
-import { Flex, Box } from '@chakra-ui/core'
+import { Flex, Box, Text } from '@chakra-ui/core'
 import useSWR from 'swr'
 import { swrFetcherJSON } from '../../utils/apiClient'
 
@@ -15,6 +15,9 @@ const ProductList: FC = () => {
         width={['100%', '100%', '1680px', '1680px']}
         mx='auto'
       >
+          <Text fontSize="lg" mx="auto" fontWeight="bold" mb="10px">
+              Producten
+          </Text>
         {data && (
           <>
             <Flex mx='auto'>

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Header from '../components/Header'
-import { Flex, Box } from '@chakra-ui/core'
+import { Flex, Box, Text } from '@chakra-ui/core'
 import Footer from '../components/Footer'
 import ProductList from '../components/Homepage/ProductsList'
 import SalesList from '../components/Homepage/SalesList'
@@ -15,7 +15,16 @@ const HomePage = () => (
       <Header />
 
       <Flex direction='column' width={['100%', '100%', '1680px', '1680px']} mx='auto'>
-        <Box px='400px'>
+
+          <Box px="400px" mb="10px">
+              <Text fontSize="lg" fontWeight="bold">
+                  Aanbiedingen
+              </Text>
+              <Text fontSize="md">
+                  Zoek jouw favoriete product tussen alle aanbiedingen en je hebt hem de volgende dag in huis tegen een scherpe korting. Maar let op: onze aanbiedingen gaan als warme broodjes over de toonbank, dus wees er snel bij.
+              </Text>
+          </Box>
+        <Box px='400px'mb="3rem">
             <SalesList />
         </Box>
 
