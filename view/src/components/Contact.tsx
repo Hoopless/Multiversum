@@ -51,7 +51,7 @@ const Contact: FC = () => (
                   Routebeschrijving? Klik <a  href=''>hier</a> voor de routebeschrijving naar Multiversum.<br />
                   <br />
 
-                  KvK: nummerKvK<br />
+                  KvK: 12345678<br />
                   BTW-Nummer: NummerBTW<br />
                </Box>
 
