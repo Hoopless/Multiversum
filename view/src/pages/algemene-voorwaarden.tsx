@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 const ContactPage = () => (
     <>
         <Head>
-            <title>Contact</title>
+            <title>Algemene Voorwaarden</title>
         </Head>
 
         <Flex direction='column' minHeight='100vh' justifyContent='space-between'>
@@ -29,9 +29,9 @@ const ContactPage = () => (
                 <Text fontSize="md">
                     1.1 De vermelde prijzen voor de aangeboden producten en diensten zijn in euro’s en inclusief 21% BTW.<br/><br/>
 
-                    1.3 De betaling van de aangeboden digitale producten op artofwifi.net geschiedt online en via de aangeboden betaalmethodes. Een download link naar het product wordt na de succesvolle betaling automatisch via email geleverd.<br/><br/>
+                    1.3 De betaling van de aangeboden digitale producten op Multiversum.snoozing.dev geschiedt online en via de aangeboden betaalmethodes. Een download link naar het product wordt na de succesvolle betaling automatisch via email geleverd.<br/><br/>
 
-                    1.4 Met de plaatsing van een bestelling en de betaling van een digitaal product gaat de koper een definitieve koopovereenkomst aan met Multiversum. De voorwaarden van deze overeenkomst zijn op artofwifi.net beschikbaar voordat en op het moment dat u een product bestelt. Tijdens het bestelproces dient u deze voorwaarden ook te accepteren.<br/><br/>
+                    1.4 Met de plaatsing van een bestelling en de betaling van een digitaal product gaat de koper een definitieve koopovereenkomst aan met Multiversum. De voorwaarden van deze overeenkomst zijn op Multiversum.snoozing.dev beschikbaar voordat en op het moment dat u een product bestelt. Tijdens het bestelproces dient u deze voorwaarden ook te accepteren.<br/><br/>
 
                     1.5 Een definitieve overeenkomst geeft de koper het niet-exclusieve en niet-overdraagbare recht voor het gebruik van de digitale producten. Bij de levering van het digitale product wordt een exemplaar van de toepasselijke Licentieovereenkomst gevoegd.<br/><br/>
 
