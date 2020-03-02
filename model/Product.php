@@ -59,6 +59,9 @@ class Product
 
             if ($sales) {
                 $query .= "WHERE in_sale = TRUE ";
+            } else {
+                $query .= "WHERE in_sale = FALSE ";
+
             }
 
             $limit = isset($_GET["limit"]) ? (int)$_GET["limit"] : 0;
