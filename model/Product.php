@@ -4,8 +4,16 @@
 class Product
 {
 
+    public function __construct()
+    {
+        $this->pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";port=" . $_ENV['DB_PORT'] . ";dbname=" .
+                             $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+
+
     /**
-     * @param array $data
      * @return string
      * @throws Exception
      */
@@ -13,10 +21,6 @@ class Product
     {
 
         try {
-
-            $pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";port=" . $_ENV['DB_PORT'] . ";dbname=" .
-                           $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $array = [
                 'name',
@@ -51,7 +55,7 @@ class Product
             $query .= ") ";
 
 
-            $stmt = $pdo->prepare($query);
+            $stmt = $this->pdo->prepare($query);
             if (isset($_POST['name'])) {
                 $stmt->bindValue(':name', $_POST['name']);
             } else {
@@ -70,13 +74,47 @@ class Product
 
     }
 
+    /**
+     * @param Int $id
+     * @return array
+     * @throws Exception
+     */
+    public function get($id){
+
+        if (! empty($id)) {
+
+            try {
+
+                $query = "SELECT *  ";
+                $query .= "FROM products ";
+
+                $query .= "WHERE id = :id";
+
+                $stmt = $this->pdo->prepare($query);
+
+                $stmt->bindParam(':id', $id);
+
+                $stmt->execute();
+
+                $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                $data = $stmt->fetchAll();
+
+                return $data;
+
+            } catch(Exception $e) {
+                Throw new Exception($e->getMessage(), (int)$e->getCode());
+            }
+
+
+        } else {
+            return ["No ID specified! please try again"];
+        }
+    }
+
     public function getAll()
     {
         try {
-
-            $pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";port=" . $_ENV['DB_PORT'] . ";dbname=" .
-                           $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $query = "SELECT *  ";
             $query .= "FROM products ";
@@ -101,7 +139,7 @@ class Product
             }
 
 
-            $stmt = $pdo->prepare($query);
+            $stmt = $this->pdo->prepare($query);
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
