@@ -13,7 +13,7 @@ const AVPage = () => (
             <Header />
 
 
-            <Flex direction='column' width={['100%', '100%', '100%', '1680px']} mx='auto'>
+            <Flex direction='column' width={['100%', '100%', '100%', '992px']} mx='auto'>
                 <Text fontSize='xl' fontWeight='bold'>
                     Algemene Voorwaarden
                 </Text>

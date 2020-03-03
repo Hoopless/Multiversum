@@ -23,7 +23,7 @@ const Header: FC = () => (
       alignItems='center'
       justifyContent='center'
     >
-      <Image size='40%' src='./img/logo.png' alt='Multiversum Logo' />
+      <Image height={['','40%']} src='./img/logo.png' alt='Multiversum Logo' />
       <Box
         fontSize='md'
         color='gray.500'
@@ -37,15 +37,14 @@ const Header: FC = () => (
 
     <Flex w={['100%', '80%', '80%', '80%']}>
       <Flex
-        p='5'
         w='100%'
         alignItems='center'
         justifyContent='center'
-        my='auto'
-        px='10px'
+        mt='auto'
+        pb="10px"
         wrap='wrap'
       >
-        <InputGroup w='100%'>
+        <InputGroup w='100%' display="none">
           <Input
             pr='30px'
             borderRadius='20px'

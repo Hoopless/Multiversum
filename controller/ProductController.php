@@ -2,6 +2,8 @@
 
 require "model/Product.php";
 
+header("Cache-Control: stale-while-revalidate=3600");
+
 class ProductController
 {
     public function index()

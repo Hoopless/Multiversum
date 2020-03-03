@@ -16,10 +16,10 @@ const HomePage = () => (
 
       <Flex
         direction='column'
-        width={['100%', '100%', '100%', '1680px']}
+        width={['100%', '100%', '100%', '992px']}
         mx='auto'
       >
-        <Box px='400px' mb='10px'>
+        <Box px={['20px', '100px', '200px', '100px']} mb='10px'>
           <Text fontSize='lg' fontWeight='bold'>
             Aanbiedingen
           </Text>
@@ -30,7 +30,7 @@ const HomePage = () => (
             snel bij.
           </Text>
         </Box>
-        <Box px='400px' mb='3rem'>
+        <Box px={['20px', '100px', '200px', '100px']} mb='3rem'>
           <SalesList />
         </Box>
 

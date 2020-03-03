@@ -1,5 +1,8 @@
 import { FC } from 'react'
-import { Flex, Box, Link } from '@chakra-ui/core'
+import { Flex, Box } from '@chakra-ui/core'
+
+// @ts-ignore
+import Link from 'next/link'
 
 const navigationItems: {
   name: string
@@ -20,10 +23,12 @@ const navigationItems: {
 ]
 
 const Navigation: FC = () => (
-  <Flex w='100%' pt='1rem'>
+  <Flex w='100%' pt="auto" justifyContent={["center", "left"]}>
     {navigationItems.map(navigationItem => (
-      <Box key={navigationItem.name} pr='40px' color='gray.500'>
-        <Link href={navigationItem.path} >{navigationItem.name}</Link>
+      <Box key={navigationItem.name} pr={["10px",'40px']} color='gray.500'>
+        <Link href={navigationItem.path}>
+          <a>{navigationItem.name}</a>
+        </Link>
       </Box>
     ))}
   </Flex>
