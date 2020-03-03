@@ -26,4 +26,19 @@ class ProductController
 
         return json_encode($pushed_data);
     }
+
+    public function create()
+    {
+        header('Content-Type: application/json');
+
+        require "model/Product.php";
+
+        $product = new Product;
+        try {
+            $product->create();
+        } catch (Exception $e) {
+        }
+
+        return json_encode("Successfully added product!");
+    }
 }

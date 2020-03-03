@@ -11,9 +11,9 @@ $base_uri = "api/v1";
 $trimmed_url = trim($request, '/');
 $url         = explode('?', $trimmed_url, 2);
 
-$debug = $base_uri . "/products";
 
 header('Access-Control-Allow-Origin: *');
+
 switch ($url[0]) {
     case $base_uri . "/products":
         require 'controller/ProductController.php';
@@ -23,10 +23,14 @@ switch ($url[0]) {
         break;
 
     case $base_uri . '/product':
+
+        require 'controller/ProductController.php';
+
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            $product = new Product;
-            $product->create();
+            $controller = new ProductController();
+            echo $controller->create();
         }
+
         break;
 
     case "":
