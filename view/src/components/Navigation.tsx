@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Flex, Box } from '@chakra-ui/core'
+import { Flex, Box, Link } from '@chakra-ui/core'
 
 const navigationItems: {
   name: string
@@ -23,7 +23,7 @@ const Navigation: FC = () => (
   <Flex w='100%' pt='1rem'>
     {navigationItems.map(navigationItem => (
       <Box key={navigationItem.name} pr='40px' color='gray.500'>
-        <a href={navigationItem.path}>{navigationItem.name}</a>
+        <Link href={navigationItem.path} >{navigationItem.name}</Link>
       </Box>
     ))}
   </Flex>

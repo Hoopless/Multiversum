@@ -12,10 +12,10 @@ const ProductList: FC = () => {
     <>
       <Flex
         direction='column'
-        width={['100%', '100%', '1680px', '1680px']}
+        width={['100%', '100%', '100%', '1680px']}
         mx='auto'
       >
-          <Text fontSize="lg" mx="auto" fontWeight="bold" mb="10px">
+          <Text fontSize='lg' mx='auto' fontWeight='bold' mb='10px'>
               Producten
           </Text>
         {data && (

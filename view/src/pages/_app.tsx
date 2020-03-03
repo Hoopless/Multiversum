@@ -1,9 +1,6 @@
 import NextApp from 'next/app'
 import MultiversumTheme from '../theme'
-import { CSSReset, ColorModeProvider, ThemeProvider } from '@chakra-ui/core'
-
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
+import { CSSReset, ThemeProvider } from '@chakra-ui/core'
 
 class CustomApp extends NextApp {
   render () {
@@ -12,10 +9,7 @@ class CustomApp extends NextApp {
     return (
       <ThemeProvider theme={MultiversumTheme}>
         <CSSReset />
-        
-        <ColorModeProvider>
-          <Component />
-        </ColorModeProvider>
+        <Component />
       </ThemeProvider>
     )
   }

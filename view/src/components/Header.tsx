@@ -12,7 +12,7 @@ import {
 
 const Header: FC = () => (
   <Flex
-    width={['100%', '100%', '992px', '992px']}
+    width={['100%', '100%', '100%', '992px']}
     mx='auto'
     wrap='wrap'
     mt='10px'

@@ -14,18 +14,24 @@ const HomePage = () => (
     <Flex direction='column' minHeight='100vh' justifyContent='space-between'>
       <Header />
 
-      <Flex direction='column' width={['100%', '100%', '1680px', '1680px']} mx='auto'>
-
-          <Box px="400px" mb="10px">
-              <Text fontSize="lg" fontWeight="bold">
-                  Aanbiedingen
-              </Text>
-              <Text fontSize="md">
-                  Zoek jouw favoriete product tussen alle aanbiedingen en je hebt hem de volgende dag in huis tegen een scherpe korting. Maar let op: onze aanbiedingen gaan als warme broodjes over de toonbank, dus wees er snel bij.
-              </Text>
-          </Box>
-        <Box px='400px'mb="3rem">
-            <SalesList />
+      <Flex
+        direction='column'
+        width={['100%', '100%', '100%', '1680px']}
+        mx='auto'
+      >
+        <Box px='400px' mb='10px'>
+          <Text fontSize='lg' fontWeight='bold'>
+            Aanbiedingen
+          </Text>
+          <Text fontSize='md'>
+            Zoek jouw favoriete product tussen alle aanbiedingen en je hebt hem
+            de volgende dag in huis tegen een scherpe korting. Maar let op: onze
+            aanbiedingen gaan als warme broodjes over de toonbank, dus wees er
+            snel bij.
+          </Text>
+        </Box>
+        <Box px='400px' mb='3rem'>
+          <SalesList />
         </Box>
 
         <ProductList />

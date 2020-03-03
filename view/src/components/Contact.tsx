@@ -3,7 +3,7 @@ import { Flex, Box, Text, Input, Textarea, Button } from '@chakra-ui/core';
 
 const Contact: FC = () => (
    <Box pb='10px'>
-      <Flex width={['100%', '100%', '992px', '992px']} mx='auto'>
+      <Flex width={['100%', '100%', '100%', '992px']} mx='auto'>
 
          <Box w={['100%', '100%', '50%', '50%' ]} pr='20px'>
             <Text fontSize='lg' w='100%' mb='5px'>Contact formulier</Text>
