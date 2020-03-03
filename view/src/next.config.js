@@ -1,9 +1,9 @@
+require('dotenv').config()
 const withCSS = require('@zeit/next-css')
-const envVariables = require('dotenv').config()
 
 module.exports = withCSS({
   env: {
-    API_URL: envVariables.API_URL || '/api/v1'
+    API_URL: process.env.API_URL || 'http://localhost:8080/api/v1'
   },
   cssLoaderOptions: {
     importLoaders: 1,
