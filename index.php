@@ -31,6 +31,11 @@ switch ($url[0]) {
             echo $controller->create();
         }
 
+        if ($_SERVER['REQUEST_METHOD'] == "GET") {
+            $controller = new ProductController();
+            echo $controller->show($_GET['id']);
+        }
+
         break;
 
     case "":

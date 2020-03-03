@@ -1,5 +1,6 @@
 <?php
 
+require "model/Product.php";
 
 class ProductController
 {
@@ -7,7 +8,6 @@ class ProductController
     {
         header('Content-Type: application/json');
 
-        require "model/Product.php";
 
         $product  = new Product;
         $products = $product->getAll();
@@ -16,10 +16,10 @@ class ProductController
 
         foreach ($products as $product) {
             $pushed_data[] = [
-                'id'    => $product['id'],
-                'name'  => $product['name'],
-                'price' => (float) $product['price'],
-                'in_sale' => (boolean) $product['in_sale'],
+                'id'        => (int)$product['id'],
+                'name'      => $product['name'],
+                'price'     => (float)$product['price'],
+                'in_sale'   => (boolean)$product['in_sale'],
                 'image_url' => $product['image_url'],
             ];
         }
@@ -27,11 +27,20 @@ class ProductController
         return json_encode($pushed_data);
     }
 
+    public function show($id){
+
+        header('Content-Type: application/json');
+
+        $product = new Product;
+
+
+        return json_encode($product->get($id));
+
+    }
+
     public function create()
     {
         header('Content-Type: application/json');
-
-        require "model/Product.php";
 
         $product = new Product;
         try {
