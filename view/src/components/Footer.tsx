@@ -21,10 +21,10 @@ const footerItems: {
 ]
 
 const Footer: FC = () => (
-  <Flex w='100%' bg='main' py='0.4rem'>
+  <Flex w='100%' bg='main.500' py='0.4rem'>
     <Flex width={['100%', '100%', '992px']} mx='auto'>
       <Flex d={['none', 'flex', 'flex', 'flex']} w='100%'>
-        <Image h='30px' src='./img/logo.png' alt='Je tering moeder' />
+        <Image h='30px' src='./img/logo.png' alt='Mutliversum Logo' />
         <Box
           fontSize='sm'
           color='white'

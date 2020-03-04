@@ -12,10 +12,18 @@ const MultiversumTheme = {
   },
   colors: {
     ...theme.colors,
-    main      : '#2C3E50',
-    font      : '#00000',
-    secondary : '#1ABC9C',
-    contrast  : '#F1C40F',
+    main      : {
+      500: '#2C3E50'
+    },
+    font      : {
+      500: '#00000'
+    },
+    secondary : {
+      500: '#1ABC9C'
+    },
+    contrast  : {
+      500:'#F1C40F'
+    },
     errors    : '#F10F3C',
     background: '#E4E4E4'
   },

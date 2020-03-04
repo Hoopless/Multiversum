@@ -17,9 +17,9 @@ const ProductCard: FC<{
         flexWrap='wrap'
         w={['10rem', '5rem', '7rem', '10rem']}
         mb={['10px', '0px']}
-        backgroundColor='main'
+        backgroundColor='main.500'
         borderWidth='1px'
-        borderColor='main'
+        borderColor='main.500'
         rounded='lg'
         overflow='hidden'
       >
@@ -60,7 +60,7 @@ const ProductCard: FC<{
             <IconButton
               aria-label='Product Toevoegen'
               ml='auto'
-              bg='secondary'
+              bg='secondary.500'
               icon='info-outline'
               color='white'
             />
