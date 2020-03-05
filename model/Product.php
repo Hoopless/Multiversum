@@ -1,15 +1,13 @@
 <?php
 
+include 'model/DataHandler.php';
 
 class Product
 {
 
     public function __construct()
     {
-        $this->pdo = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";port=" . $_ENV['DB_PORT'] . ";dbname=" .
-                             $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
-
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->dataHandler = new DataHandler($_ENV['DB_HOST'], "mysql", $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DB_PORT']);
     }
 
 
@@ -54,8 +52,8 @@ class Product
             }
             $query .= ") ";
 
+            $stmt = $this->dataHandler->preparedQuery($query);
 
-            $stmt = $this->pdo->prepare($query);
             if (isset($_POST['name'])) {
                 $stmt->bindValue(':name', $_POST['name']);
             } else {
@@ -87,10 +85,9 @@ class Product
 
                 $query = "SELECT *  ";
                 $query .= "FROM products ";
-
                 $query .= "WHERE id = :id";
 
-                $stmt = $this->pdo->prepare($query);
+                $stmt = $this->dataHandler->preparedQuery($query);
 
                 $stmt->bindParam(':id', $id);
 
@@ -99,6 +96,7 @@ class Product
                 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
                 $data = $stmt->fetchAll();
+
 
                 return $data;
 
@@ -139,7 +137,8 @@ class Product
             }
 
 
-            $stmt = $this->pdo->prepare($query);
+            $stmt = $this->dataHandler->preparedQuery($query);
+
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
