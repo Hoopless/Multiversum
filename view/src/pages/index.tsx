@@ -4,11 +4,14 @@ import { Flex, Box, Text } from '@chakra-ui/core'
 import Footer from '../components/Footer'
 import ProductList from '../components/Homepage/ProductsList'
 import SalesList from '../components/Homepage/SalesList'
+import PreloadFetch from '../components/Utils/PreloadFetch'
 
 const HomePage = () => (
   <>
     <Head>
       <title>Homepage</title>
+			<PreloadFetch apiPath='/products?limit=50' />
+			<PreloadFetch apiPath='/products?sales=true&limit=6' />
     </Head>
 
     <Flex direction='column' minHeight='100vh' justifyContent='space-between'>
