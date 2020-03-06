@@ -89,13 +89,17 @@ class Product
 
                 $stmt = $this->dataHandler->preparedQuery($query);
 
-                $stmt->bindParam(':id', $id);
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
                 $stmt->execute();
 
                 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
-                $data = $stmt->fetchAll();
+                $data = $stmt->fetch();
+
+                $data['id'] = (int)$data['id'];
+                $data['price'] = (float)$data['price'];
+                $data['in_sale'] = (boolean)$data['in_sale'];
 
 
                 return $data;
