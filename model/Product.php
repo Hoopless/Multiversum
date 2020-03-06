@@ -27,7 +27,7 @@ class Product
                 'platform',
                 'resolution',
                 'refresh_rate',
-                'input_type',
+                'audio_type',
                 'included_info',
                 'colour',
                 'warranty',

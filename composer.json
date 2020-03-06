@@ -2,6 +2,7 @@
     "require": {
         "vlucas/phpdotenv": "^4.1",
       "ext-mysqli": "*",
-      "ext-pdo": "*"
+      "ext-pdo": "*",
+        "sendgrid/sendgrid": "^7.4"
     }
 }

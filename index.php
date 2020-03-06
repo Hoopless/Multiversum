@@ -15,6 +15,14 @@ $url         = explode('?', $trimmed_url, 2);
 header('Access-Control-Allow-Origin: *');
 
 switch ($url[0]) {
+    case $base_uri . "/mail":
+        require 'controller/MailableController.php';
+
+        $controller = new MailableController();
+        echo $controller->sendEmail();
+
+        break;
+
     case $base_uri . "/products":
         require 'controller/ProductController.php';
 
