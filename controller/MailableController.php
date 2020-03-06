@@ -12,7 +12,9 @@ class MailableController
 
     public function sendEmail()
     {
+        header('Content-Type: application/json');
+
         $data = $_POST;
-        $this->mailable->sendMail($data);
+        return $this->mailable->sendMail($data);
     }
 }

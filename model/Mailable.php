@@ -27,16 +27,20 @@ class Mailable
 
             $response = $this->sendgrind->send(($email));
 
-            if ($response->statusCode() !== 200 || $response->statusCode() !== 202 ) {
-                $array = [
-                    "Error! Got status code {$response->statusCode()} but expected status code 200"];
+            if ($response->statusCode() !== 200 || $response->statusCode() !== 202) {
+                $array = json_decode($response->body());
 
-                return json_encode($array);
+                if (isset($array->errors[0])){
+                    return json_encode($array->errors[0]);
+                }
+
+                return json_encode("Error! could not find error code.");
+
             }
 
             $array = [
-                'responseCode'    => $response->statusCode(),
-                'message' => 'Succefully send e-mail!',
+                'responseCode' => $response->statusCode(),
+                'message'      => 'Succefully send e-mail!',
             ];
 
             return json_encode($array);
