@@ -18,6 +18,10 @@ class Product
     public function create()
     {
 
+        if (isset($_FILES['image'])) {
+            $_POST['image_url'] = $this->uploadFile($_FILES['image']);
+        }
+
         try {
 
             $array = [
@@ -72,12 +76,31 @@ class Product
 
     }
 
+    public function uploadFile($file)
+    {
+
+        $target_dir  = "view/images/";
+        $target_file = $target_dir . basename($file['name']);
+
+        if (! file_exists('view/images')) {
+            mkdir('view/images', 0777, true);
+        }
+
+        if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            $file['url'] = $target_file;
+        }
+
+
+        return $file['url'];
+    }
+
     /**
      * @param Int $id
      * @return array
      * @throws Exception
      */
-    public function get($id){
+    public function get($id)
+    {
 
         if (! empty($id)) {
 
@@ -97,14 +120,14 @@ class Product
 
                 $data = $stmt->fetch();
 
-                $data['id'] = (int)$data['id'];
-                $data['price'] = (float)$data['price'];
+                $data['id']      = (int)$data['id'];
+                $data['price']   = (float)$data['price'];
                 $data['in_sale'] = (boolean)$data['in_sale'];
 
 
                 return $data;
 
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 Throw new Exception($e->getMessage(), (int)$e->getCode());
             }
 
