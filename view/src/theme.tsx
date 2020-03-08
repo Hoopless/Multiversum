@@ -6,14 +6,23 @@ const MultiversumTheme = {
     ...theme.icons,
   },
   fonts: {
-    heading: 'Quicksand, sans-serif',
-    body   : 'Quicksand, system-ui, sans-serif',
+    heading: 'Roboto, sans-serif',
+    body   : 'Roboto, system-ui, sans-serif',
     mono   : 'Quicksand, system-ui, sans-serif'
   },
   colors: {
     ...theme.colors,
     main      : {
-      500: '#2C3E50'
+			50 : '#2C3E50',
+      100: '#2C3E50',
+      200: '#2C3E50',
+      300: '#2C3E50',
+      400: '#2C3E50',
+      500: '#2C3E50',
+      600: '#2C3E50',
+      700: '#2C3E50',
+      800: '#2C3E50',
+      900: '#2C3E50'
     },
     font      : {
       500: '#00000'

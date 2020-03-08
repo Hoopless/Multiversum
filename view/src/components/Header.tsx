@@ -23,7 +23,7 @@ const Header: FC = () => (
       alignItems='center'
       justifyContent='center'
     >
-      <Image height={['','40%']} src='./img/logo.png' alt='Multiversum Logo' />
+      <Image height={['','40%']} src='/img/logo.png' alt='Multiversum Logo' />
       <Box
         fontSize='md'
         color='gray.500'

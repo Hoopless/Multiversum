@@ -6,8 +6,10 @@ import useSWR from 'swr'
 import { swrFetcherJSON } from '../../utils/apiClient'
 
 const ProductList: FC = () => {
-  const { data } = useSWR('/products?limit=50', swrFetcherJSON, {
-    loadingTimeout: 0
+  const { data } = useSWR('/products?limit=50&sales=0', swrFetcherJSON, {
+		loadingTimeout: 0,
+		onError: (err) => console.error('Error SWR', err),
+		onLoadingSlow: () => console.log('Loading slow SWR')
   })
 
   return (
@@ -32,7 +34,7 @@ const ProductList: FC = () => {
             <Flex py='2.5rem' mx='auto' justifyContent="center" wrap="wrap">
               {data.slice(5, 10).map((product: ConsumerProduct) => (
                 <Box key={product.id} mx='0.75rem'>
-                  <ProductCard product={product} />
+                  <ProductCard sale={product.in_sale}  product={product} />
                 </Box>
               ))}
             </Flex>

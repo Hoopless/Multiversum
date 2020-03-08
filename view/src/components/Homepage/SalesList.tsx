@@ -8,8 +8,10 @@ import { swrFetcherJSON } from '../../utils/apiClient'
 import SliderArrow from '../SliderArrows'
 
 const SalesList: FC = () => {
-  const { data } = useSWR('/products?sales=true&limit=6', swrFetcherJSON, {
-    loadingTimeout: 0
+  const { data } = useSWR('/products?sales=1&limit=6', swrFetcherJSON, {
+    loadingTimeout: 0,
+		onError: (err) => console.error('Error SWR', err),
+		onLoadingSlow: () => console.log('Loading slow SWR')
   })
 
   const sliderBreakpoints: ResponsiveObject[] = [
@@ -30,7 +32,7 @@ const SalesList: FC = () => {
   ]
 
   return (
-    <Slider slidesToShow={3} responsive={sliderBreakpoints} autoplaySpeed={4000} prevArrow={<SliderArrow to='chevron-left' />} nextArrow={<SliderArrow to='chevron-right' />}>
+    <Slider autoplay slidesToShow={3} responsive={sliderBreakpoints} autoplaySpeed={4000} prevArrow={<SliderArrow to='chevron-left' />} nextArrow={<SliderArrow to='chevron-right' />}>
       {data &&
         data.map((product: ConsumerProduct) => (
           <Flex justifyItems='center'>

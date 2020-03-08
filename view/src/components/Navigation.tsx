@@ -1,7 +1,5 @@
 import { FC } from 'react'
 import { Flex, Box } from '@chakra-ui/core'
-
-// @ts-ignore
 import Link from 'next/link'
 
 const navigationItems: {
@@ -12,10 +10,10 @@ const navigationItems: {
     name: 'Homepage',
     path: '/',
   },
-  {
-    name: 'Producten',
-    path: '/products',
-  },
+  // {
+  //   name: 'Producten',
+  //   path: '/products',
+  // },
   {
     name: 'Contact',
     path: '/contact',

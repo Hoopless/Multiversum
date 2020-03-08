@@ -15,12 +15,26 @@ class Mailable
 
     public function sendMail($data)
     {
+        if (! isset($data['name']) || ! isset($data['email']) || ! isset($data['subject']) ){
+            return json_encode([
+                'name' => 'Geen waarde opgestuurd.',
+                'email' => 'Geen waarde opgestuurd.',
+                'subject' => 'Geen waarde opgestuurd.'
+                ]);
+        }
+
+        if (! filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
+            return json_encode([
+                    'email' => 'Ongeldig email'
+                ]);
+        }
+
         try {
 
             $email = $this->email;
 
             $email->setFrom("multiversum@snoozing.dev");
-            $email->setSubject("Received email");
+            $email->setSubject("Received email from {$data['name']}");
             $email->addTo("multiversum@snoozing.dev", $data['name']);
             $email->setReplyTo($data['email']);
             $email->addContent("text/plain", "There has been an e-mail from {$data['name']}. With the following subject \n {$data['subject']} \n Their e-mail: {$data['email']}");
@@ -33,8 +47,6 @@ class Mailable
                 if (isset($array->errors[0])){
                     return json_encode($array->errors[0]);
                 }
-
-                return json_encode("Error! could not find error code.");
 
             }
 

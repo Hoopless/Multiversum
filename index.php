@@ -45,6 +45,9 @@ switch ($url[0]) {
         }
 
         break;
+    case "/view/image/":
+
+        break;
 
     case "":
         require "./view/build/index.html";

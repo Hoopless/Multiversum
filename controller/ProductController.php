@@ -46,10 +46,9 @@ class ProductController
 
         $product = new Product;
         try {
-            $product->create();
+           return  $product->create();
         } catch (Exception $e) {
+            return die($e);
         }
-
-        return json_encode("Successfully added product!");
     }
 }
