@@ -35,8 +35,8 @@ const SalesList: FC = () => {
     <Slider autoplay slidesToShow={3} responsive={sliderBreakpoints} autoplaySpeed={4000} prevArrow={<SliderArrow to='chevron-left' />} nextArrow={<SliderArrow to='chevron-right' />}>
       {data &&
         data.map((product: ConsumerProduct) => (
-          <Flex justifyItems='center'>
-            <Box key={product.id}>
+          <Flex key={product.id} justifyItems='center'>
+            <Box>
               <ProductCard sale center product={product} />
             </Box>
           </Flex>
