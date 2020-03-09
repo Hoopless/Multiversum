@@ -57,6 +57,7 @@ switch ($url[0]) {
 		$decoded  = urldecode($url[0]);
 		$assetURL = "./view/build/{$url[0]}";
 		$yesURL   = "./view/build/{$decoded}";
+		$htmlURL  = "./view/build/{$url[0]}.html";
 
         if (file_exists($assetURL)) {
             $contentType = mime_content_type($assetURL);
@@ -71,6 +72,13 @@ switch ($url[0]) {
 			header("FuckMy: Life");
 
 			require $yesURL;
+			exit;
+		} if (file_exists($htmlURL)) {
+			$contentType = mime_content_type($htmlURL);
+			header("Content-Type: {$contentType}");
+			header("FuckMy: Life");
+
+			require $htmlURL;
 			exit;
 		}
 

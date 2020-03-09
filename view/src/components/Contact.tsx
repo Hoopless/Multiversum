@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import { Flex, Box, Text, Input, Textarea, Button, FormControl } from '@chakra-ui/core'
 import { FaCheck } from 'react-icons/fa'
 
-
+const mapLink    = 'https://www.google.nl/maps/dir/Jan+Pieterszoon+Coenstraat,+Utrecht//@52.0910617,5.0887362,15z/data=!4m9!4m8!1m5!1m1!1s0x47c66f65451cd7b3:0xa52fd8e5ccf60705!2m2!1d5.0975124!2d52.0910488!1m0!3e0?hl=nl'
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 
 interface FormValues {
@@ -120,7 +120,7 @@ const Contact: FC = () => {
 							Zeeland<br />
 							<br />
 
-							Routebeschrijving? Klik <a href=''>hier</a> voor de routebeschrijving naar Multiversum.<br />
+							Routebeschrijving? <a href={mapLink}>Klik hier</a> voor de routebeschrijving naar Multiversum.<br />
 							<br />
 
 							KvK: 12345678<br />
