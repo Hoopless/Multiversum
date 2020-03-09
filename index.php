@@ -15,43 +15,60 @@ $url         = explode('?', $trimmed_url, 2);
 header('Access-Control-Allow-Origin: *');
 
 switch ($url[0]) {
-    case $base_uri . "/mail":
-        require 'controller/MailableController.php';
 
-        $controller = new MailableController();
-        echo $controller->sendEmail();
+	case $base_uri . "/page":
 
-        break;
+		require 'controller/PageController.php';
 
-    case $base_uri . "/products":
-        require 'controller/ProductController.php';
+		if ($_SERVER['REQUEST_METHOD'] == "PUT") {
+			$controller = new PageController();
+			echo $controller->update($_REQUEST);
+		}
+		if ($_SERVER['REQUEST_METHOD'] == "GET") {
+			$controller = new PageController();
+			echo $controller->get($_REQUEST['id']);
+		}
 
-        $controller = new ProductController();
-        echo $controller->index();
-        break;
+		break;
 
-    case $base_uri . '/product':
 
-        require 'controller/ProductController.php';
+	case $base_uri . "/mail":
+		require 'controller/MailableController.php';
 
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            $controller = new ProductController();
-            echo $controller->create();
-        }
+		$controller = new MailableController();
+		echo $controller->sendEmail();
 
-        if ($_SERVER['REQUEST_METHOD'] == "GET") {
-            $controller = new ProductController();
-            echo $controller->show($_GET['id']);
-        }
+		break;
 
-        break;
-    case "/view/image/":
+	case $base_uri . "/products":
+		require 'controller/ProductController.php';
 
-        break;
+		$controller = new ProductController();
+		echo $controller->index();
+		break;
 
-    case "":
-        require "./view/build/index.html";
-        break;
+	case $base_uri . '/product':
+
+		require 'controller/ProductController.php';
+
+		if ($_SERVER['REQUEST_METHOD'] == "POST") {
+			$controller = new ProductController();
+			echo $controller->create();
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == "GET") {
+			$controller = new ProductController();
+			echo $controller->show($_REQUEST['id']);
+		}
+
+		break;
+	case "/view/image/":
+
+		break;
+
+	case "":
+		require "./view/build/index.html";
+		break;
 
 	default:
 		$decoded  = urldecode($url[0]);
@@ -59,14 +76,15 @@ switch ($url[0]) {
 		$yesURL   = "./view/build/{$decoded}";
 		$htmlURL  = "./view/build/{$url[0]}.html";
 
-        if (file_exists($assetURL)) {
-            $contentType = mime_content_type($assetURL);
+		if (file_exists($assetURL)) {
+			$contentType = mime_content_type($assetURL);
 			header("Content-Type: {$contentType}");
 			header("Fuck: PHP");
 
 			require $assetURL;
 			exit;
-		} if (file_exists($yesURL)) {
+		}
+		if (file_exists($yesURL)) {
 			$contentType = mime_content_type($yesURL);
 			header("Content-Type: {$contentType}");
 			header("FuckMy: Life");
