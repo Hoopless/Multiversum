@@ -64,7 +64,7 @@ class Product
 
 				switch ($value) {
 					case "in_sale":
-						$stmt->bindValue($text, isset($_POST[$value]) ? $this->checkBoolean($_POST[$value]) : NULL);
+						$stmt->bindValue($text, isset($_POST[$value]) ? $this->checkBoolean($_POST[$value]) : false , PDO::PARAM_BOOL);
 						break;
 					default:
 						$stmt->bindValue($text, isset($_POST[$value]) ? $_POST[$value] : NULL);
@@ -73,76 +73,62 @@ class Product
 			}
 			$stmt->execute();
 
+			$productID =  $this->dataHandler->lastInsertId();
 			if (isset($_FILES['image'])) {
-				$entryId = $this->dataHandler->lastInsertId();
-				$this->uploadToAzure($_FILES['image'], $entryId);
+				$entryId   = $productID;
+				$imageLink = $this->uploadToAzure($_FILES['image'], $entryId);
+
+				$this->updateImage($entryId, $imageLink);
 			}
 
 
-			return json_encode(['message' => "Successfully added product!"]);
+			return json_encode([
+				'message' => "Successfully added product!",
+				'id' => (int) $productID
+				]);
 		} catch (Exception $e) {
 			throw new Exception($e->getMessage(), (int) $e->getCode());
 		}
 	}
 
-	public function uploadFile($file)
-	{
+	public function updateImage($id, $imageLink) {
+		try {
+			$query = "UPDATE products SET image_url = :image_link WHERE id = :product_id";
+			$preparedQuery = $this->dataHandler->preparedQuery($query);
 
-		$target_dir  = "view/images/";
-		$target_file = $target_dir . basename($file['name']);
+			$preparedQuery->bindParam(':image_link', $imageLink);
+			$preparedQuery->bindParam(':product_id', $id);
 
-		if (!file_exists('view/images')) {
-			mkdir('view/images', 0777, true);
+			$preparedQuery->execute();
+		} catch (Exception $e) {
+			throw new Exception($e->getMessage(), (int) $e->getCode());
 		}
+	}
 
-		if (move_uploaded_file($file["tmp_name"], $target_file)) {
-			$file['url'] = $target_file;
-		}
-
-
-		return $file['url'];
-  }
-
-	public function uploadToAzure ($file, $id)
+	private function uploadToAzure ($file, $id)
 	{
-
-		$storageToken = getenv('STORAGE_SAS_TOKEN');
-		$accountName = getenv('STORAGE_ACCOUNT_NAME');
+		$httpClient    = new GuzzleHttp\Client();
+		$storageToken  = getenv('STORAGE_SAS_TOKEN');
+		$accountName   = getenv('STORAGE_ACCOUNT_NAME');
 		$containerName = getenv('STORAGE_CONTAINER_NAME');
 
+		$fileName         = urlencode($file['name']);
+		$fileURL          = "https://{$accountName}.blob.core.windows.net/{$containerName}/{$id}/{$fileName}";
+		$authenticatedURL = "{$fileURL}{$storageToken}";
 
-		$fileName = urlencode($file['name']);
-		$url = "https://{$accountName}.blob.core.windows.net/{$containerName}/{$id}/{$fileName}{$storageToken}";
+		$uploadReq = $httpClient->request('PUT', $authenticatedURL, [
+			'body'    => file_get_contents($file['tmp_name']),
+			'headers' => [
+				'x-ms-blob-type' => 'BlockBlob'
+			]
+		]);
 
-		$storageConn = curl_init();
-		// $imageReader = fopen($file['tmp_name'], 'r');
-		// $imageSize = filesize($file['tmp_name']);
-		// $imageContent = fread($imageReader, $imageSize);
-
-		curl_setopt($storageConn, CURLOPT_URL, $url);
-		curl_setopt($storageConn, CURLOPT_PUT, true);
-		// curl_setopt($storageConn, CURLOPT_POSTFIELDS, 'test');
-		curl_setopt($storageConn, CURLOPT_HTTPHEADER, array(
-			'x-ms-blob-type: BlockBlob',
-			"x-ms-original-content-length: 4"
-		));
-
-		$res = curl_exec($storageConn);
-
-		echo curl_getinfo($storageConn, CURLINFO_HTTP_CODE);
-		echo $res;
-
-		if (curl_errno($storageConn)) {
-			echo curl_error($storageConn);
-		}
-
-		// fclose($imageReader);
-		curl_close($storageConn);
+		return $fileURL;
   }
 
 	public function checkBoolean($value)
 	{
-		return $value ? 1 : 0;
+		return $value === "true" ? 1 : 0;
 	}
 
 	/**

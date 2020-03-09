@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 const LVPage = () => (
     <>
         <Head>
-            <title>Algemene Voorwaarden</title>
+            <title>LeveringsVoorwaarden</title>
         </Head>
 
         <Flex direction='column' minHeight='100vh' justifyContent='space-between'>
@@ -15,7 +15,7 @@ const LVPage = () => (
 
             <Flex direction='column' width={['100%', '100%', '100%', '992px']} mx='auto'>
                 <Text fontSize='xl' fontWeight='bold'>
-                    Algemene Voorwaarden
+                    LeveringsVoorwaarden
                 </Text>
 
                 <Text fontSize='md'>

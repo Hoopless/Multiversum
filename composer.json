@@ -3,6 +3,7 @@
         "vlucas/phpdotenv": "^4.1",
       "ext-mysqli": "*",
       "ext-pdo": "*",
-        "sendgrid/sendgrid": "^7.4"
+        "sendgrid/sendgrid": "^7.4",
+        "guzzlehttp/guzzle": "^6.5"
     }
 }

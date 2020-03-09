@@ -58,7 +58,7 @@ const ProductCard: FC<{
 							€ {product.price}
 						</Text>
 
-						<Link href={`/product/${product.id}`}>
+						<Link href={`/product/[id]?id=${product.id}`} as={`/product/${product.id}`}>
 							<IconButton
 								aria-label='Product Toevoegen'
 								ml='auto'

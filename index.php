@@ -53,14 +53,26 @@ switch ($url[0]) {
         require "./view/build/index.html";
         break;
 
-    default:
-        $assetURL = "./view/build/{$url[0]}";
+	default:
+		$decoded  = urldecode($url[0]);
+		$assetURL = "./view/build/{$url[0]}";
+		$yesURL   = "./view/build/{$decoded}";
+
         if (file_exists($assetURL)) {
             $contentType = mime_content_type($assetURL);
-            header("Content-Type: {$contentType}");
+			header("Content-Type: {$contentType}");
+			header("Fuck: PHP");
 
-            require $assetURL;
-        } else {
-            require './view/build/index.html';
-        }
+			require $assetURL;
+			exit;
+		} if (file_exists($yesURL)) {
+			$contentType = mime_content_type($yesURL);
+			header("Content-Type: {$contentType}");
+			header("FuckMy: Life");
+
+			require $yesURL;
+			exit;
+		}
+
+		require './view/build/index.html';
 }

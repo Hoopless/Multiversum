@@ -25,13 +25,13 @@ interface FormValues {
 }
 
 const CMSCreate: FC = () => {
-	const [formSent, setFormSent] = useState(false)
+	const [lastProductID, setLastProductID] = useState(false)
 	const productForm = useFormik({
 		initialValues: {
 			name: '',
 			description: '',
 			platform: '',
-			price: '0',
+			price: '',
 			resolution: '',
 			audio_type: '',
 			refresh_rate: '',
@@ -78,9 +78,9 @@ const CMSCreate: FC = () => {
 				body: formData
 			})
 
-			console.log(await formRes.text(), formRes.status)
+			const responseMessage = await formRes.json()
+			setLastProductID(responseMessage.id)
 			helpers.setSubmitting(false)
-			setFormSent(true)
 		}
 	})
 
@@ -94,13 +94,13 @@ const CMSCreate: FC = () => {
 
 			<Flex width={['100%', '100%', '992px']} mx='auto' flexDirection="column">
 
-				{formSent && (
-					<Flex pb='15px' alignItems="Center" justifyContent="center" w="100%" wrap="wrap">
+				{lastProductID && (
+					<Flex pb='15px' alignItems="Center" justifyContent="center" w="100%" wrap="wrap" bg="green.100" px="10px" py="5px">
 						<Flex w="80%" alignItems="Center" justifyContent="center">
 							<FaCheck size="30px" color="#1ABC9C" />
 						</Flex>
-						<Text fontSize='sm' color='green.600' w="100%" textAlign="center">Verstuurd!</Text>
-						<Text fontSize='sm' color='green.600' w="100%" textAlign="center">Wij nemen zo snel mogelijk contact op!</Text>
+						<Text fontSize='sm' color='green.600' w="100%" textAlign="center">Product aangemaakt!</Text>
+						<Box fontSize='sm' color='green.600' w="100%" textAlign="center">Bekijk het product op: <a href={`/product/${lastProductID}`}>Product Informatie</a></Box>
 					</Flex>
 				)}
 				<form onSubmit={productForm.handleSubmit}>
@@ -126,14 +126,25 @@ const CMSCreate: FC = () => {
 								</Box>
 
 								<Box w="100%" px="15px" mb="10px">
+									<Text mb="2px">Prijs</Text>
+									<Input
+										isRequired
+										id="price"
+										name="price"
+										type="number"
+										value={productForm.values.price}
+										onChange={productForm.handleChange}
+										size="md"
+									/>
+								</Box>
+
+								<Box w="100%" px="15px" mb="10px">
 									<Text mb="2px">Beschrijving</Text>
 									<Textarea
-										isRequired
 										id='description'
 										name='description'
 										value={productForm.values.description}
 										onChange={productForm.handleChange}
-
 									/>
 								</Box>
 
@@ -158,7 +169,7 @@ const CMSCreate: FC = () => {
 								</Box>
 
 								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Included info</Text>
+									<Text mb="2px">Bijgeleverde info</Text>
 									<Textarea
 
 										id='included_info'
@@ -169,8 +180,8 @@ const CMSCreate: FC = () => {
 								</Box>
 
 								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Image</Text>
-									<Text mb="2px">Let op! foto die transpirant is </Text>
+									<Text mb="2px">Foto</Text>
+									<Text mb="2px">Let op! foto die transparent is</Text>
 									<Input
 										isRequired
 										id='image'
@@ -222,7 +233,7 @@ const CMSCreate: FC = () => {
 									/>
 								</Box>
 								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Colour</Text>
+									<Text mb="2px">Kleur</Text>
 									<Input
 										id='colour'
 										name='colour'
@@ -234,24 +245,24 @@ const CMSCreate: FC = () => {
 									/>
 								</Box>
 								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Earn</Text>
+									<Text mb="2px">Merk</Text>
 									<Input
-										id='ean'
-										name='ean'
+										id='brand'
+										name='brand'
 										type="text"
-										value={productForm.values.ean}
+										value={productForm.values.brand}
 										onChange={productForm.handleChange}
 										placeholder=""
 										size="md"
 									/>
 								</Box>
 								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Brand</Text>
+									<Text mb="2px">EAN</Text>
 									<Input
-										id='brand'
-										name='brand'
+										id='ean'
+										name='ean'
 										type="text"
-										value={productForm.values.brand}
+										value={productForm.values.ean}
 										onChange={productForm.handleChange}
 										placeholder=""
 										size="md"
