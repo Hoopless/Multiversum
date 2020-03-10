@@ -1,6 +1,5 @@
 <?php
 
-include 'model/DataHandler.php';
 
 class Product
 {

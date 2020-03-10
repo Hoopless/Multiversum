@@ -2,7 +2,6 @@
 
 require 'model/Mailable.php';
 
-
 class MailableController
 {
     public function __construct()
