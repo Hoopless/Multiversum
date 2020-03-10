@@ -1,5 +1,6 @@
 <?php
 
+require 'model/DataHandler.php';
 
 class Page
 {
@@ -13,7 +14,7 @@ class Page
 		if (! empty($id)) {
 
 			try {
-				$query = "SELECT * FROM pages WHERE id = :id";
+				$query = "SELECT json_content FROM pages WHERE id = :id";
 
 				$stmt = $this->dataHandler->preparedQuery($query);
 
@@ -24,6 +25,8 @@ class Page
 				$stmt->setFetchMode(PDO::FETCH_ASSOC);
 
 				$data = $stmt->fetch();
+
+				$data = json_decode($data['json_content']);
 
 				return $data;
 			} catch (Exception $e) {

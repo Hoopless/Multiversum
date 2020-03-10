@@ -11,9 +11,11 @@ class PageController
 
 	public function get($id)
 	{
+		header('Content-Type: application/json');
+
 		$data = $this->pageModel->get($id);
 
-		return $data;
+		return json_encode($data);
 	}
 
 	public function update($data)
