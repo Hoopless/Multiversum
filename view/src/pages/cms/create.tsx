@@ -22,6 +22,10 @@ interface FormValues {
 	brand: string
 	image: string
 	in_sale: boolean
+	own_display: boolean
+	height: string
+	point_of_view: string
+	width: string
 }
 
 const CMSCreate: FC = () => {
@@ -42,7 +46,12 @@ const CMSCreate: FC = () => {
 			sku: '',
 			brand: '',
 			image: '',
-			in_sale: false
+			in_sale: false,
+			own_display: false,
+			point_of_view: "",
+			height: "",
+			width: "",
+
 		},
 		validate: values => {
 			console.log(2)
@@ -72,6 +81,10 @@ const CMSCreate: FC = () => {
 			formData.append('brand', values.brand)
 			formData.append('image', values.image)
 			formData.append('in_sale', String(values.in_sale))
+			formData.append('own_display', String(values.own_display))
+			formData.append('point_of_view', values.point_of_view)
+			formData.append('height', values.height)
+			formData.append('width', values.width)
 
 			const formRes = await fetch(`${process.env.API_URL}/product`, {
 				method: 'POST',
@@ -244,6 +257,64 @@ const CMSCreate: FC = () => {
 										size="md"
 									/>
 								</Box>
+
+
+
+								<Box w="100%" px="15px" mb="10px">
+									<Text mb="2px">Garantie</Text>
+									<Input
+										id='warranty'
+										name='warranty'
+										type="text"
+										value={productForm.values.warranty}
+										onChange={productForm.handleChange}
+										placeholder=""
+										size="md"
+									/>
+								</Box>
+
+
+								<Box w="100%" px="15px" mb="10px">
+									<Text mb="2px">Gezichtsveld</Text>
+									<Input
+										id='point_of_view'
+										name='point_of_view'
+										type="text"
+										value={productForm.values.point_of_view}
+										onChange={productForm.handleChange}
+										placeholder=""
+										size="md"
+									/>
+								</Box>
+
+
+								<Box w="100%" px="15px" mb="10px">
+									<Text mb="2px">Hoogte</Text>
+									<Input
+										id='height'
+										name='height'
+										type="text"
+										value={productForm.values.height}
+										onChange={productForm.handleChange}
+										placeholder=""
+										size="md"
+									/>
+								</Box>
+
+								<Box w="100%" px="15px" mb="10px">
+									<Text mb="2px">Breedte</Text>
+									<Input
+										id='width'
+										name='width'
+										type="text"
+										value={productForm.values.width}
+										onChange={productForm.handleChange}
+										placeholder=""
+										size="md"
+									/>
+								</Box>
+
+
 								<Box w="100%" px="15px" mb="10px">
 									<Text mb="2px">Merk</Text>
 									<Input
@@ -287,6 +358,16 @@ const CMSCreate: FC = () => {
 										id='in_sale'
 										name='in_sale'
 										value={productForm.values.in_sale}
+										onChange={productForm.handleChange}
+										size="md"
+									/>
+								</Box>
+								<Box w="100%" px="15px" mb="10px">
+									<Text mb="2px">Eigen display?</Text>
+									<Switch
+										id='own_display'
+										name='own_display'
+										value={productForm.values.own_display}
 										onChange={productForm.handleChange}
 										size="md"
 									/>

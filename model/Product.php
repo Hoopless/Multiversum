@@ -34,6 +34,10 @@ class Product
 				'brand',
 				'image_url',
 				'in_sale',
+				'point_of_view',
+				'height',
+				'width',
+				'own_display',
 			];
 
 			$query = "INSERT INTO products (";
@@ -63,6 +67,7 @@ class Product
 
 				switch ($value) {
 					case "in_sale":
+					case "own_display":
 						$stmt->bindValue($text, isset($_POST[$value]) ? $this->checkBoolean($_POST[$value]) : false , PDO::PARAM_BOOL);
 						break;
 					default:

@@ -24,14 +24,16 @@ const HomePage = () => (
       >
         <Box px={['20px', '100px', '200px', '100px']} mb='10px'>
           <Text fontSize='lg' fontWeight='bold'>
-            Aanbiedingen
+            Welkom bij Multiversum!
           </Text>
           <Text fontSize='md'>
-            Zoek jouw favoriete product tussen alle aanbiedingen en je hebt hem
-            de volgende dag in huis tegen een scherpe korting. Maar let op: onze
+            Zoek jouw favoriete VR-Bril bij Multiversum tegen scherpe prijzen. Maar let op: onze
             aanbiedingen gaan als warme broodjes over de toonbank, dus wees er
             snel bij.
           </Text>
+			<Text fontSize='lg' fontWeight='bold' mt="15px">
+				Aanbiedingen
+			</Text>
         </Box>
         <Box px={['20px', '100px', '200px', '100px']} mb='3rem'>
           <SalesList />
