@@ -9,11 +9,11 @@ class PageController
 		$this->pageModel = new Page();
 	}
 
-	public function get($id)
+	public function get($id, $name)
 	{
 		header('Content-Type: application/json');
 
-		$data = $this->pageModel->get($id);
+		$data = $this->pageModel->get($id, $name);
 
 		return json_encode($data);
 	}

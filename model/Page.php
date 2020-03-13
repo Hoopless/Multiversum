@@ -9,14 +9,14 @@ class Page
 		$this->dataHandler = new DataHandler($_ENV['DB_HOST'], "mysql", $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DB_PORT']);
 	}
 
-	public function get($id, $name)
+	public function get($id, $name = "")
 	{
 		if (! empty($id)) {
 
 			try {
-				$query = "SELECT name json_content FROM pages ";
+				$query = "SELECT name, json_content FROM pages ";
 
-				$isIdSet = isset($name) ? true : false;
+				$isIdSet = ! empty($name) ? true : false;
 
 				if ($isIdSet) {
 					$query .= " WHERE name = :name ";
@@ -27,6 +27,10 @@ class Page
 				$stmt = $this->dataHandler->preparedQuery($query);
 
 				$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+				if ($isIdSet) {
+					$stmt->bindParam(':name', $name);
+				}
 
 				$stmt->execute();
 
