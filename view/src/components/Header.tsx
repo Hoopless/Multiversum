@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import Navigation from './Navigation'
+import Link from 'next/link'
 import {
   Flex,
   Box,
@@ -23,7 +24,9 @@ const Header: FC = () => (
       alignItems='center'
       justifyContent='center'
     >
-      <Image height={['','40%']} src='/img/logo.png' alt='Multiversum Logo' />
+			<Link href='/'>
+				<Image height={['','40%']} src='/img/logo.png' alt='Multiversum Logo' />
+			</Link>
       <Box
         fontSize='md'
         color='gray.500'
