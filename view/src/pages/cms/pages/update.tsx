@@ -226,8 +226,8 @@ const CMSCreate: FC = () => {
 													 mb="10px">
 													<Text mb="2px">BTW Nummer</Text>
 													<Textarea
-														id='kvk_number'
-														name='kvk_number'
+														id='btw_number'
+														name='btw_number'
 													/>
 												</Box>
 
