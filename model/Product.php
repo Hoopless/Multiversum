@@ -59,7 +59,7 @@ class Product
 			if (isset($_POST['name'])) {
 				$stmt->bindValue(':name', $_POST['name']);
 			} else {
-				json_encode(['message' => "Not created, there was no name set."]);
+				return ['message' => "Not created, there was no name set."];
 			}
 
 			foreach ($array as $value) {
@@ -86,10 +86,10 @@ class Product
 			}
 
 
-			return json_encode([
+			return [
 				'message' => "Successfully added product!",
 				'id' => (int) $productID
-				]);
+				];
 		} catch (Exception $e) {
 			throw new Exception($e->getMessage(), (int) $e->getCode());
 		}

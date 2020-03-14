@@ -51,24 +51,39 @@ class Page
 
 	public function update($data)
 	{
+
+		if (! isset($data['id']) || ! isset($data['json_content'])) {
+			return "The ID or JSON_CONTENT is missing.";
+		}
+
 		try {
 
-			$query = "UPDATE pages SET content = :content WHERE id = :id;";
+			$array = [
+				'meta_title',
+				'meta_description',
+			];
+
+			$query = "UPDATE pages SET json_content = :json_content, meta_title = :meta_title, meta_description = :meta_description WHERE id = :id;";
 
 			$stmt = $this->dataHandler->preparedQuery($query);
 
-			$stmt->bindParam(':content', $data['id']);
-			$stmt->bindParam(':content', $data['content']);
+			$stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
+			$stmt->bindParam(':json_content', $data['json_content']);
+
+			foreach ($array as $value) {
+				$text = ":" . $value;
+				$stmt->bindValue($text, isset($data[$value]) ? $data[$value] : NULL);
+			}
 
 			$stmt->execute();
 
-			$pageID = $this->dataHandler->lastInsertId();
+			$pageID = $data['id'];
 
 
-			return json_encode([
-				'message' => "Successfully updated product!",
+			return [
+				'message' => "Successfully updated page!",
 				'id'      => (int)$pageID,
-			]);
+			];
 
 		} catch (Exception $e) {
 

@@ -46,7 +46,7 @@ class ProductController
 
         $product = new Product;
         try {
-           return  $product->create();
+           return  json_encode($product->create());
         } catch (Exception $e) {
             return die($e);
         }

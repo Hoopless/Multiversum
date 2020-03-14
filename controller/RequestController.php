@@ -13,16 +13,23 @@ class RequestController
 		$this->page     = new PageController();
 		$this->mailable = new MailableController();
 		$this->base_uri = "api/v1";
+
+
+
 	}
 
 	public function handleRequest($url)
 	{
+
 		switch ($url) {
 
 			case $this->base_uri . "/page":
 
-				if ($_SERVER['REQUEST_METHOD'] == "PUT") {
-					echo $this->page->update($_REQUEST);
+				if ($_SERVER['REQUEST_METHOD'] == "PATCH") {
+
+					$_PATCH = Notihnio\RequestParser\RequestParser::parse();
+
+					echo $this->page->update($_PATCH->params);
 				}
 
 				if ($_SERVER['REQUEST_METHOD'] == "GET") {
