@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { ConsumerProduct } from '../../types/product'
 import { Box, Image, Text, Badge, IconButton, Flex } from '@chakra-ui/core'
 import Link from 'next/link'
+import currencyFormat from '../../utils/priceFormat'
 
 const ProductCard: FC<{
 	product: ConsumerProduct
@@ -55,7 +56,7 @@ const ProductCard: FC<{
 
 					<Flex>
 						<Text fontSize='1.20rem' color='white' mt='auto'>
-							€ {product.price}
+							€ {currencyFormat(product.price)}
 						</Text>
 
 						<Link href={`/product/[id]?id=${product.id}`} as={`/product/${product.id}`}>
