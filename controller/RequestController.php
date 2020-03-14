@@ -66,10 +66,10 @@ class RequestController
 				break;
 
 			default:
-				$decoded  = urldecode($url[0]);
-				$assetURL = "./view/build/{$url[0]}";
+				$decoded  = urldecode($url);
+				$assetURL = "./view/build/{$url}";
 				$yesURL   = "./view/build/{$decoded}";
-				$htmlURL  = "./view/build/{$url[0]}.html";
+				$htmlURL  = "./view/build/{$url}.html";
 
 				if (file_exists($assetURL)) {
 					$contentType = mime_content_type($assetURL);

@@ -16,5 +16,3 @@ require 'controller/RequestController.php';
 
 $controller = new RequestController();
 $controller->handleRequest($url[0]);
-
-
