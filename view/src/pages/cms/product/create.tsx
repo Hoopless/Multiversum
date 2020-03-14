@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useFormik } from 'formik'
-import CMSHeader from "../../components/cms/header";
+import CMSHeader from "../../../components/cms/header";
 import { Flex, Input, Box, Text, Textarea, Checkbox, Stack, Button, FormControl, CheckboxGroup, Switch } from '@chakra-ui/core'
 import { useState, FC, ChangeEvent } from 'react'
 import { FaCheck } from 'react-icons/fa'
