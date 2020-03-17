@@ -1,6 +1,8 @@
 <?php
 
 
+header("Cache-Control: stale-while-revalidate=99999999");
+
 class Page
 {
 	public function __construct()
@@ -8,43 +10,49 @@ class Page
 		$this->dataHandler = new DataHandler($_ENV['DB_HOST'], "mysql", $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DB_PORT']);
 	}
 
-	public function get($id, $name = "")
+	public function get($id = "", $name = "")
 	{
-		if (! empty($id)) {
 
-			try {
-				$query = "SELECT name, json_content FROM pages ";
+		try {
+			$query = "SELECT id, name, meta_title, meta_description, json_content FROM pages ";
 
-				$isIdSet = ! empty($name) ? true : false;
+			$isNameSet = ! empty($name) ? true : false;
+			$isIdSet   = ! empty($id) ? true : false;
 
-				if ($isIdSet) {
-					$query .= " WHERE name = :name ";
-				}
-
-				$query .= " WHERE id = :id ";
-
-				$stmt = $this->dataHandler->preparedQuery($query);
-
-				$stmt->bindParam(':id', $id, PDO::PARAM_INT);
-
-				if ($isIdSet) {
-					$stmt->bindParam(':name', $name);
-				}
-
-				$stmt->execute();
-
-				$stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-				$data = $stmt->fetch();
-
-				$data = json_decode($data['json_content']);
-
-				return $data;
-			} catch (Exception $e) {
+			if ($isNameSet) {
+				$query .= " WHERE name = :name ";
 			}
 
-		} else {
-			return ["No ID specified! please try again"];
+			if ($isIdSet) {
+				$query .= " WHERE id = :id ";
+			}
+
+
+			$stmt = $this->dataHandler->preparedQuery($query);
+
+			if ($isIdSet) {
+				$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+			}
+
+			if ($isNameSet) {
+				$stmt->bindParam(':name', $name);
+			}
+
+			$stmt->execute();
+
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+			$data = $stmt->fetch();
+
+			$data['content'] = json_decode($data['json_content'], true);
+
+			$data['id'] = (int)$data['id'];
+
+			unset($data['json_content']);
+
+
+			return $data;
+		} catch (Exception $e) {
 		}
 	}
 

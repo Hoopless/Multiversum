@@ -1,10 +1,18 @@
 import { FC, useState } from 'react'
 import { useFormik } from 'formik'
-import { Flex, Box, Text, Input, Textarea, Button, FormControl } from '@chakra-ui/core'
+import { Flex, Box, Text, Input, Textarea, Button, FormControl, Image } from '@chakra-ui/core'
 import { FaCheck } from 'react-icons/fa'
+import getPageContent from '../utils/getPageContent'
+
 
 const mapLink    = 'https://www.google.nl/maps/dir/Jan+Pieterszoon+Coenstraat,+Utrecht//@52.0910617,5.0887362,15z/data=!4m9!4m8!1m5!1m1!1s0x47c66f65451cd7b3:0xa52fd8e5ccf60705!2m2!1d5.0975124!2d52.0910488!1m0!3e0?hl=nl'
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+
+interface ContactData {
+	contact_content: string
+  kvk_number: string
+  btw_number: string
+}
 
 interface FormValues {
 	name: string
@@ -14,6 +22,9 @@ interface FormValues {
 
 const Contact: FC = () => {
 	const [formSent, setFormSent] = useState(false)
+
+	const { data } = getPageContent<ContactData>('Contact')
+
 	const contactForm = useFormik({
 		initialValues: {
 			name: '',
@@ -46,6 +57,10 @@ const Contact: FC = () => {
 			setFormSent(true)
 		}
 	})
+
+	if (!data) {
+		return (<></>)
+	}
 
 	return (
 		<Box pb='10px'>
@@ -111,20 +126,15 @@ const Contact: FC = () => {
 					</Box>
 
 					<Box >
-						<Text fontSize='md' w='100%' fontWeight='semibold'>Bedrijfgegevens</Text>
+						<Box fontSize='md' pr="10px" whiteSpace='pre-line'>
+							{data.contact_content}
 
-						<Box fontSize='md' pr="10px">
-							Multiversum<br />
-							1861 Jan Pieterszoon Coenstraat<br />
-							69217 Maasdriel<br />
-							Zeeland<br />
+							<br />
+							<Image mt="20px" height="200px" src="https://media.wired.com/photos/59269cd37034dc5f91bec0f1/master/pass/GoogleMapTA.jpg" />
 							<br />
 
-							Routebeschrijving? <a href={mapLink}>Klik hier</a> voor de routebeschrijving naar Multiversum.<br />
-							<br />
-
-							KvK: 12345678<br />
-							BTW-Nummer: NummerBTW<br />
+							KvK: {data.kvk_number}<br />
+							BTW-Nummer: {data.btw_number}<br />
 						</Box>
 
 					</Box>

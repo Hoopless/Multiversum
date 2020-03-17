@@ -5,36 +5,33 @@ import Footer from '../components/Footer'
 import ProductList from '../components/Homepage/ProductsList'
 import SalesList from '../components/Homepage/SalesList'
 import PreloadFetch from '../components/Utils/PreloadFetch'
-import useSWR from "swr";
-import {swrFetcherJSON} from "../utils/apiClient";
+import getPageContent from '../utils/getPageContent'
 
-interface homepageData{
+interface HomepageData {
 	homepage_title: string
 	homepage_text: string
 }
 
 const HomePage = () => {
+	const { data } = getPageContent<HomepageData>('Homepage')
 
-	const { data } = useSWR('/pages?id=1', swrFetcherJSON, {
-		loadingTimeout: 0,
-		onError: (err) => console.error('Error SWR', err),
-		onLoadingSlow: () => console.log('Loading slow SWR')
-	})
-
+	if (!data) {
+		return (<></>)
+	}
 
 	return (
 		<>
 			<Head>
 				<title>Homepage</title>
-				<PreloadFetch apiPath='/products?limit=50'/>
-				<PreloadFetch apiPath='/products?sales=true&limit=6'/>
-				<PreloadFetch apiPath='/pages?id=1'/>
+				<PreloadFetch apiPath='/products?limit=50' />
+				<PreloadFetch apiPath='/products?sales=true&limit=6' />
+				<PreloadFetch apiPath='/page?id=1' />
 			</Head>
 
 			<Flex direction='column'
-				  minHeight='100vh'
-				  justifyContent='space-between'>
-				<Header/>
+				minHeight='100vh'
+				justifyContent='space-between'>
+				<Header />
 
 				<Flex
 					direction='column'
@@ -42,28 +39,28 @@ const HomePage = () => {
 					mx='auto'
 				>
 					<Box px={['20px', '100px', '200px', '100px']}
-						 mb='10px'>
+						mb='10px'>
 						<Text fontSize='lg'
-							  fontWeight='bold'>
+							fontWeight='bold'>
 							{data.homepage_title}
 						</Text>
 						<Text fontSize='md'>
 							{data.homepage_text}
 						</Text>
 						<Text fontSize='lg'
-							  fontWeight='bold'
-							  mt="15px">
+							fontWeight='bold'
+							mt="15px">
 							Aanbiedingen
 						</Text>
 					</Box>
 					<Box px={['20px', '100px', '200px', '100px']}
-						 mb='3rem'>
-						<SalesList/>
+						mb='3rem'>
+						<SalesList />
 					</Box>
 
-					<ProductList/>
+					<ProductList />
 				</Flex>
-				<Footer/>
+				<Footer />
 			</Flex>
 		</>
 	)
