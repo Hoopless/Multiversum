@@ -9,6 +9,7 @@ class Contact
 		'lastname',
 		'address',
 		'house_number',
+		'postcode',
 		'city',
 		'email',
 		'phone',

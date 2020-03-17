@@ -20,6 +20,23 @@ class Order
 
 	}
 
+	public function get($id)
+	{
+		$query = "SELECT * FROM orders ";
+		$query .= "JOIN  product_order ON orders.id = product_order.order_id ";
+		$query .= "WHERE orders.id = :id ";
+
+		$stmt = $this->dataHandler->preparedQuery($query);
+
+		$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+		$stmt->execute();
+
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		$data = $stmt->fetchAll();
+
+		return $data;
+	}
+
 	public function create($data)
 	{
 		/**
@@ -42,6 +59,9 @@ class Order
 		$id_order = $this->insertOrder($data);
 
 		$this->insertRelationProduct($data['product_id'], $id_order);
+
+		$mailable = new Mailable();
+		$mail = $mailable->sendConfirmationMail($data['email'], $data, $id_order);
 
 		return [
 			'message'    => "Successfully registerd order.",
