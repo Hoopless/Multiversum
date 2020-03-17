@@ -3,6 +3,9 @@
 require 'controller/MailableController.php';
 require 'controller/PageController.php';
 require 'controller/ProductController.php';
+require 'controller/OrderController.php';
+require 'model/DataHandler.php';
+require 'model/Tools.php';
 
 class RequestController
 {
@@ -12,9 +15,8 @@ class RequestController
 		$this->product  = new ProductController();
 		$this->page     = new PageController();
 		$this->mailable = new MailableController();
+		$this->order    = new OrderController();
 		$this->base_uri = "api/v1";
-
-
 
 	}
 
@@ -22,6 +24,13 @@ class RequestController
 	{
 
 		switch ($url) {
+
+			case $this->base_uri . "/order":
+
+				echo $this->order->create($_POST);
+
+				break;
+
 
 			case $this->base_uri . "/page":
 

@@ -1,6 +1,5 @@
 <?php
 
-require 'model/DataHandler.php';
 
 class Page
 {

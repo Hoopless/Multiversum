@@ -40,19 +40,7 @@ class Product
 				'own_display',
 			];
 
-			$query = "INSERT INTO products (";
-			foreach ($array as $key => $value) {
-				$query .= "{$value}";
-				($key !== count($array) - 1) ? $query .= ", " : "";
-			}
-			$query .= ") ";
-
-			$query .= "VALUES (";
-			foreach ($array as $key => $value) {
-				$query .= ":{$value}";
-				($key !== count($array) - 1) ? $query .= ", " : "";
-			}
-			$query .= ") ";
+			$query = Tools::insertQuery($array, "products");
 
 			$stmt = $this->dataHandler->preparedQuery($query);
 

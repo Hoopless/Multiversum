@@ -5,6 +5,7 @@
       "ext-pdo": "*",
         "sendgrid/sendgrid": "^7.4",
         "guzzlehttp/guzzle": "^6.5",
-        "notihnio/php-request-parser": "1.0.0"
+        "notihnio/php-request-parser": "1.0.0",
+        "nesbot/carbon": "^2.31"
     }
 }
