@@ -35,8 +35,9 @@ class RequestController
 				if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
 					isset($_REQUEST['name']) ? $name = $_REQUEST['name'] : $name = "";
+					isset($_REQUEST['id']) ? $id = $_REQUEST['id'] : $id = "";
 
-					echo $this->page->get($_REQUEST['id'], $name);
+					echo $this->page->get($id, $name);
 				}
 				break;
 
