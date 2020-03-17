@@ -26,11 +26,12 @@ class RequestController
 		switch ($url) {
 
 			case $this->base_uri . "/order":
-
 				echo $this->order->create($_POST);
-
 				break;
 
+			case $this->base_uri . '/pages':
+				echo $this->page->index();
+				break;
 
 			case $this->base_uri . "/page":
 

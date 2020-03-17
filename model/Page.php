@@ -56,6 +56,36 @@ class Page
 		}
 	}
 
+	public function getAll()
+	{
+		try {
+
+			$query = "SELECT *  ";
+			$query .= "FROM pages ";
+
+			$stmt = $this->dataHandler->readsData($query);
+
+			$stmt->execute();
+
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+
+			$datas = $stmt->fetchAll();
+
+			foreach ($datas as $key => $data) {
+				$datas[$key]['content'] = json_decode($data['json_content'], true);
+
+				$datas[$key]['id'] = (int)$data['id'];
+
+				unset($datas[$key]['json_content']);
+			}
+		} catch (PDOException $e) {
+			throw new \PDOException($e->getMessage(), (int)$e->getCode());
+		}
+
+		return $datas;
+	}
+
 	public function update($data)
 	{
 

@@ -4,9 +4,19 @@ require 'model/Page.php';
 
 class PageController
 {
+
 	public function __construct()
 	{
 		$this->pageModel = new Page();
+	}
+
+	public function index()
+	{
+		header('Content-Type: application/json');
+
+		$data = $this->pageModel->getAll();
+
+		return json_encode($data);
 	}
 
 	public function get($id, $name)
@@ -24,4 +34,5 @@ class PageController
 
 		return json_encode($data);
 	}
+
 }
