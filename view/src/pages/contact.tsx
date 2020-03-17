@@ -4,6 +4,7 @@ import { Flex } from '@chakra-ui/core'
 import Footer from '../components/Footer'
 import Contact from '../components/Contact'
 
+
 const ContactPage = () => (
   <>
     <Head>

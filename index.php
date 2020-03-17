@@ -9,7 +9,6 @@ $request     = $_SERVER['REQUEST_URI'];
 $trimmed_url = trim($request, '/');
 $url         = explode('?', $trimmed_url, 2);
 
-
 header('Access-Control-Allow-Origin: *');
 
 require 'controller/RequestController.php';
