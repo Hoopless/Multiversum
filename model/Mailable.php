@@ -7,7 +7,7 @@ class Mailable
 	/**
 	 * @var \SendGrid\Mail\Mail
 	 */
-	private static $email = "multiversum@snoozing.dev";
+	CONST EMAIL = "multiversum@snoozing.dev";
 	private $token;
 
 	public function __construct()
@@ -106,7 +106,7 @@ class Mailable
 		$formatted_total_price = number_format($order['total_price_inc'], 2, ',', '.');
 		$tax_order             = number_format(($order['total_price_inc'] - $order['total_price_ex']), 2, ',', '.');
 		$formatted_price       = number_format($product['price'], 2, ',', '.');
-		$own_email             = self::$email;
+		$own_email             = self::EMAIL;
 
 		$content = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
 					<html xmlns=\"http://www.w3.org/1999/xhtml\">
