@@ -70,6 +70,13 @@ class RequestController
 					echo $this->product->show($_REQUEST['id']);
 				}
 
+				if ($_SERVER['REQUEST_METHOD'] == "PATCH") {
+
+					$_PATCH = Notihnio\RequestParser\RequestParser::parse();
+
+					echo $this->product->update($_PATCH->params);
+				}
+
 				break;
 
 			case "":

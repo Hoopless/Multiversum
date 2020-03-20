@@ -30,6 +30,34 @@ class Tools
 		return $query;
 	}
 
+
+	/**
+	 * Creates an update query based on an array and table name.
+	 *
+	 * @param array  $array
+	 * @param string $table
+	 * @param array  $data
+	 * @return string
+	 */
+	public static function updateQuery($array, $table, $data)
+	{
+		$query = "UPDATE {$table} SET ";
+
+		foreach ($array as $key => $value) {
+			if (isset($data[$value]) && ! empty($data[$value])) {
+				$query .= "{$value} = :{$value} ";
+				($key !== count($array) - 1) ? $query .= ", " : "";
+			}
+		}
+
+		if (preg_match('/, $/', $query)) {
+			$query = trim($query);
+			$query = rtrim($query, "," );
+		}
+
+		return $query;
+	}
+
 	/**
 	 * @param array $array
 	 * @param array $data
