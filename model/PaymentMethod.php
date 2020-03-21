@@ -21,11 +21,11 @@ class PaymentMethod
 	}
 
 
-	public function setPaymentMethod()
+	public function getPaymentMethod()
 	{
 		try {
 
-			$query = "SELECT name, fees, precentage FROM payment_methods WHERE id = :id";
+			$query = "SELECT * FROM payment_methods WHERE id = :id";
 
 			$stmt = $this->dataHandler->preparedQuery($query);
 			$stmt->bindParam(':id', $this->id, PDO::PARAM_INT);

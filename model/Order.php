@@ -1,6 +1,7 @@
 <?php
 
 require 'model/Contact.php';
+require 'model/PaymentMethod.php';
 
 class Order
 {
@@ -61,13 +62,49 @@ class Order
 		$this->insertRelationProduct($data['product_id'], $id_order);
 
 		$mailable = new Mailable();
-		$mail = $mailable->sendConfirmationMail($data['email'], $data, $id_order);
+		$mail     = $mailable->sendConfirmationMail($data['email'], $data, $id_order);
 
 		return [
 			'message'    => "Successfully registerd order.",
 			'order_id'   => (int)$id_order,
 			'contact_id' => (int)$id_contact,
 		];
+	}
+
+	public function getLastOrders($limit = NULL)
+	{
+		$query = "SELECT * FROM orders ORDER BY id DESC ";
+
+		if ($limit) {
+			$query .= "LIMIT {$limit}";
+		}
+
+		$stmt = $this->dataHandler->readsData($query);
+
+		$stmt->execute();
+
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+		$data = $stmt->fetchAll();
+
+		foreach ($data as $key => $item) {
+			$paymentMethod = new PaymentMethod((int)$item['payment_id']);
+			$contact       = new Contact();
+			$contact       = $contact->get($item['contact_id']);
+
+			$data[$key]['id']              = (int)$item['id'];
+			$data[$key]['contact_id']      = (int)$item['total_price_inc'];
+			$data[$key]['total_price_inc'] = (float)$item['total_price_inc'];
+			$data[$key]['total_price_inc'] = (float)$item['total_price_inc'];
+			$data[$key]['total_price_ex']  = (float)$item['total_price_ex'];
+			$data[$key]['payment_name']    = $paymentMethod->name;
+			$data[$key]['contact_name']    = $contact['firstname'] . " " . $contact['lastname'];
+
+			unset($data[$key]['payment_id']);
+
+		}
+
+		return $data;
 	}
 
 	private function insertOrder($data)

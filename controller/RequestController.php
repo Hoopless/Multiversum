@@ -29,6 +29,10 @@ class RequestController
 				echo $this->order->create($_POST);
 				break;
 
+			case $this->base_uri . "/orders/last":
+				echo $this->order->getLastOrders();
+				break;
+
 			case $this->base_uri . '/pages':
 				echo $this->page->index();
 				break;
@@ -50,7 +54,6 @@ class RequestController
 					echo $this->page->get($id, $name);
 				}
 				break;
-
 
 			case $this->base_uri . "/mail":
 				echo $this->mailable->sendEmail();

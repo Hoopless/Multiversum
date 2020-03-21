@@ -56,7 +56,23 @@ class Contact
 
 			return $id_contact;
 		} catch (Exception $e) {
-			throw new Exception($e->getMessage(), (int) $e->getCode());
+			throw new Exception($e->getMessage(), (int)$e->getCode());
 		}
+	}
+
+	public function get($id)
+	{
+		$query = "SELECT * FROM contacts ";
+		$query .= "WHERE id = :id ";
+
+		$stmt = $this->dataHandler->preparedQuery($query);
+
+		$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+		$stmt->execute();
+
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		$data = $stmt->fetch();
+
+		return $data;
 	}
 }
