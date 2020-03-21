@@ -98,6 +98,20 @@ class Product
 		}
 	}
 
+	private function deleteFromAzure($filename)
+	{
+		$httpClient    = new GuzzleHttp\Client();
+		$storageToken  = getenv('STORAGE_SAS_TOKEN');
+		$accountName   = getenv('STORAGE_ACCOUNT_NAME');
+		$containerName = getenv('STORAGE_CONTAINER_NAME');
+
+		$authenticatedURL = "{$filename}{$storageToken}";
+
+		$httpClient->request('delete', $authenticatedURL);
+
+		return true;
+	}
+
 	private function uploadToAzure($file, $id)
 	{
 		$httpClient    = new GuzzleHttp\Client();
@@ -117,6 +131,21 @@ class Product
 		]);
 
 		return $fileURL;
+	}
+
+	public function getImageURL($id)
+	{
+		$query = "SELECT image_url FROM products WHERE id = :id";
+
+		$stmt = $this->dataHandler->preparedQuery($query);
+		$stmt->bindParam(':id', $id);
+		$stmt->execute();
+
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		$data = $stmt->fetch();
+
+
+		return $data['image_url'];
 	}
 
 	public function checkBoolean($value)
@@ -184,7 +213,6 @@ class Product
 			$stmt->bindValue(':id', $data['id']);
 
 
-
 			foreach (self::$insert_array as $value) {
 				if (isset($data[$value]) && ! empty($data[$value])) {
 					$text = ":" . $value;
@@ -202,6 +230,24 @@ class Product
 			}
 
 			$stmt->execute();
+
+
+			//Delete file from Azure & Reupload if there is a file.
+			if (isset($_FILES['image'])) {
+				$file_url = $this->getImageURL($data['id']);
+
+				if ($file_url){
+					if ($this->deleteFromAzure($file_url)) {
+						$entryId   = $data['id'];
+						$imageLink = $this->uploadToAzure($_FILES['image'], $entryId);
+						$this->updateImage($entryId, $imageLink);
+					}
+				} else {
+					$entryId   = $data['id'];
+					$imageLink = $this->uploadToAzure($_FILES['image'], $entryId);
+					$this->updateImage($entryId, $imageLink);
+				}
+			}
 
 			return true;
 
