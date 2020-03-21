@@ -33,6 +33,10 @@ class RequestController
 				echo $this->order->getLastOrders();
 				break;
 
+			case $this->base_uri . "/orders/stats":
+				echo $this->order->getStatsbyMonth();
+				break;
+
 			case $this->base_uri . '/pages':
 				echo $this->page->index();
 				break;
