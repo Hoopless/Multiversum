@@ -161,7 +161,7 @@ class Product
 	public function get($id)
 	{
 
-		if (! isset($data['id'])) {
+		if (! isset($id)) {
 			return false;
 		}
 
