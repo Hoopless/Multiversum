@@ -33,7 +33,8 @@ const ProductUpdate: FC = () => {
     }
   ).data
   const productForm = useFormik({
-    initialValues: product,
+    initialValues: product || {},
+    enableReinitialize: true,
     onSubmit: async values => {
       console.log(values)
     },
@@ -111,7 +112,7 @@ const ProductUpdate: FC = () => {
             {id &&
               product &&
               ProductValueTypes.map(productValueType => {
-                const productValue = (productForm.values && productForm.values[productValueType.id]) || product[productValueType.id]
+                const productValue = (productForm.values && productForm.values[productValueType.id])
                 if (productValue === undefined) {
                   return
                 }
