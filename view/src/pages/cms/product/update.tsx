@@ -111,7 +111,7 @@ const ProductUpdate: FC = () => {
             {id &&
               product &&
               ProductValueTypes.map(productValueType => {
-                const productValue = productForm?.values[productValueType.id] || product[productValueType.id]
+                const productValue = (productForm.values && productForm.values[productValueType.id]) || product[productValueType.id]
                 if (productValue === undefined) {
                   return
                 }
