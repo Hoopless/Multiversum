@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import { Flex, Box, Text, Input, Textarea, Button, FormControl, Image } from '@chakra-ui/core'
 import { FaCheck } from 'react-icons/fa'
 import getPageContent from '../utils/getPageContent'
+import BackButton from '../components/BackButton'
 
 
 const mapLink    = 'https://www.google.nl/maps/dir/Jan+Pieterszoon+Coenstraat,+Utrecht//@52.0910617,5.0887362,15z/data=!4m9!4m8!1m5!1m1!1s0x47c66f65451cd7b3:0xa52fd8e5ccf60705!2m2!1d5.0975124!2d52.0910488!1m0!3e0?hl=nl'
@@ -66,6 +67,9 @@ const Contact: FC = () => {
 	return (
 		<Box pb='10px'>
 			<Flex width={['100%', '100%', '100%', '992px']} mx='auto' wrap='wrap'>
+
+				<BackButton />
+
 				<Box w={['100%', '100%', '50%', '50%']} pr='20px' mb="30px">
 					<form onSubmit={contactForm.handleSubmit}>
 						<FormControl isRequired>

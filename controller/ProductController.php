@@ -46,7 +46,7 @@ class ProductController
 
 		if (! $this->product->update($data)){
 			$id_product = $data["id"];
-			return json_encode(['message' => 'failed to update product with id {$id_product}']);
+			return json_encode(['message' => "failed to update product with id {$id_product}"]);
 		}
 
 		return json_encode(['message' => 'succesfully updated product']);

@@ -1,4 +1,13 @@
 import { FC } from 'react'
+import { FaMobileAlt, FaDesktop, FaPlaystation, FaHome } from 'react-icons/fa'
+import useSWR from 'swr'
+import { swrFetcherJSON } from '../../utils/apiClient'
+import { ConsumerProduct } from '../../types/product'
+import currencyFormat from '../../utils/priceFormat'
+import BackButton from '../../components/BackButton'
+import { FaCartPlus } from 'react-icons/fa'
+import Link from 'next/link'
+
 import {
 	Flex,
 	Box,
@@ -7,14 +16,10 @@ import {
 	Tabs,
 	TabList,
 	TabPanels,
+	Button,
 	Tab,
 	TabPanel,
 } from '@chakra-ui/core'
-import { FaMobileAlt, FaDesktop, FaPlaystation } from 'react-icons/fa'
-import useSWR from 'swr'
-import { swrFetcherJSON } from '../../utils/apiClient'
-import { ConsumerProduct } from '../../types/product'
-import currencyFormat from '../../utils/priceFormat'
 
 const ProductShow: FC<{ id: number | string }> = ({ id }) => {
 	const productInfo: ConsumerProduct = useSWR(
@@ -50,6 +55,9 @@ const ProductShow: FC<{ id: number | string }> = ({ id }) => {
 	return (
 		<>
 			<Flex wrap='wrap' width={['100%', '100%', '100%', '992px']} mx='auto'>
+
+				<BackButton />
+
 				<Box width={['100%', 4 / 12, 4 / 12, 4 / 12]}>
 					<Image src={productInfo.image_url} alt='Product logo' />
 				</Box>
@@ -105,10 +113,24 @@ const ProductShow: FC<{ id: number | string }> = ({ id }) => {
 					</Tabs>
 
 					<Flex justifyContent='end'>
-						<Text ml='auto' fontSize='xl' mr='6rem'>
+						<Text textAlign='right' fontSize='xl' pr='0.5rem' w="100%">
 							€ {currencyFormat(productInfo.price)}
 						</Text>
+
+						<Flex w="100%">
+						<Link href={`/order?productId=${productInfo.id}`}>
+							<Button
+								aria-label='Product Toevoegen'
+								ml='auto'
+								bg='secondary.500'
+								rightIcon={FaCartPlus}
+								color='white'
+							>Koop Nu!</Button>
+
+						</Link>
 					</Flex>
+					</Flex>
+
 				</Box>
 			</Flex>
 		</>

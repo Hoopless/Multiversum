@@ -4,15 +4,22 @@ import { Flex, Box, Text, Input, Button } from '@chakra-ui/core'
 import Footer from '../../components/Footer'
 import PreloadFetch from '../../components/Utils/PreloadFetch'
 import FlexBox from '../../components/shared/FlexBox'
+import { useRouter } from 'next/router'
 
 
 
-const OrderConfirmStep2 = () => {
+const OrderConfirmStep2 = ( {}) => {
+  const router = useRouter()
+  const { orderId } = router.query
+
+  if (!orderId) {
+    return <></>
+  }
 
 	return (
 		<>
 			<Head>
-				<title>Homepage</title>
+				<title>Order geplaatst - Bedankt voor uw bestelling!</title>
 				<PreloadFetch apiPath='/products?limit=50' />
 				<PreloadFetch apiPath='/products?sales=true&limit=6' />
 			</Head>
@@ -31,7 +38,7 @@ const OrderConfirmStep2 = () => {
                     </svg>
                 </Flex>
                 <Box w="100%" textAlign="center">
-                    <Text fontSize="lg" fontWeight="bold" my="20px" mt="30px">Alles is volgens planning gegaan!  Order nummer: #12345</Text>
+                    <Text fontSize="lg" fontWeight="bold" my="20px" mt="30px">Alles is volgens planning gegaan!  Order nummer: #{orderId}</Text>
                     <Text fontSize="md" my="10px">U krijgt nu een e-mail met informatie over de bestelling en levering.</Text>
                     <Text fontSize="md" my="10px">Heeft u vragen of opmerkingen over uw bestelling? neem contact met ons op.</Text>
 

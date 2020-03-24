@@ -36,7 +36,8 @@ const ProductOverview: FC = () => {
     <>
       <Head>
         <title>Admin Panel - Product Overzicht</title>
-        <PreloadFetch apiPath='/products' />
+        <PreloadFetch apiPath='/orders/stats' />
+        <PreloadFetch apiPath='/orders/last' />
       </Head>
 
       <CMSHeader />

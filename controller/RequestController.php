@@ -100,6 +100,14 @@ class RequestController
 				$yesURL   = "./view/build/{$decoded}";
 				$htmlURL  = "./view/build/{$url}.html";
 
+				if (file_exists($htmlURL)) {
+					$contentType = mime_content_type($htmlURL);
+					header("Content-Type: {$contentType}");
+					header("FuckMy: Life");
+
+					require $htmlURL;
+					exit;
+				}
 				if (file_exists($assetURL)) {
 					$contentType = mime_content_type($assetURL);
 					header("Content-Type: {$contentType}");
@@ -114,14 +122,6 @@ class RequestController
 					header("FuckMy: Life");
 
 					require $yesURL;
-					exit;
-				}
-				if (file_exists($htmlURL)) {
-					$contentType = mime_content_type($htmlURL);
-					header("Content-Type: {$contentType}");
-					header("FuckMy: Life");
-
-					require $htmlURL;
 					exit;
 				}
 

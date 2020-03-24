@@ -3,6 +3,7 @@ import { ConsumerProduct } from '../../types/product'
 import { Box, Image, Text, Badge, IconButton, Flex } from '@chakra-ui/core'
 import Link from 'next/link'
 import currencyFormat from '../../utils/priceFormat'
+import { FaCartPlus } from 'react-icons/fa'
 
 const ProductCard: FC<{
 	product: ConsumerProduct
@@ -11,6 +12,7 @@ const ProductCard: FC<{
 }> = ({ product, sale, center }) => {
 	return (
 		<>
+		<Link href={`/product/[id]?id=${product.id}`} as={`/product/${product.id}`}>
 			<Box
 				display={center ? 'flex' : 'block'}
 				mx={center ? 'auto' : ''}
@@ -59,18 +61,19 @@ const ProductCard: FC<{
 							€ {currencyFormat(product.price)}
 						</Text>
 
-						<Link href={`/product/[id]?id=${product.id}`} as={`/product/${product.id}`}>
+						<Link href={`/order?productId=${product.id}`}>
 							<IconButton
 								aria-label='Product Toevoegen'
 								ml='auto'
 								bg='secondary.500'
-								icon='info-outline'
+								icon={FaCartPlus}
 								color='white'
 							/>
 						</Link>
 					</Flex>
 				</Box>
 			</Box>
+			</Link>
 		</>
 	)
 }

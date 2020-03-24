@@ -1,0 +1,97 @@
+import { FC } from 'react'
+import OrderProgress from './OrderProgress'
+import StepTitle from './StepTitle'
+import OrderContext from '../../context/OrderContext/OrderContext'
+import { useContext } from 'react'
+import { useFormik } from 'formik'
+import { Box, Text, Input, Flex, Button } from '@chakra-ui/core'
+
+
+interface FormProps {
+  paymentId: number
+
+}
+
+const OrderStepTwo: FC<{
+  next: () => void
+}> = ({ next }) => {
+  const fuckinghell = useContext(OrderContext)
+  console.log(fuckinghell)
+
+  const infoForm = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: '',
+      houseNumber: '',
+      postalCode: '',
+      city: '',
+    },
+    onSubmit: values => {
+      // updateOrder({
+      //   user: {
+      //     firstName: values.firstName,
+      //     lastName: values.lastName,
+      //     email: values.email,
+      //     phone: values.phone,
+      //   },
+      //   location: {
+      //     address: values.address,
+      //     houseNumber: values.houseNumber,
+      //     postalCode: values.postalCode,
+      //     city: values.city,
+      //   },
+      // })
+
+      next()
+    },
+  })
+
+  return (
+    <>
+      <OrderProgress step={1} />
+
+      <StepTitle>Stap 2: Betaling</StepTitle>
+
+      <form onSubmit={infoForm.handleSubmit}>
+        <Flex w="70%" wrap="wrap">
+
+          <Text mt="10px" w="100%" px="15px" fontWeight="bold">
+            Aflever gegevens
+          </Text>
+
+          <Flex w="33.33%" bg="white" py="20px" px="10px" wrap="wrap" >
+							<Flex w="15%" justifyContent="center"my="auto">
+								<input type="radio"/>
+							</Flex>
+							<Flex w="35%" justifyContent="center"my="auto" >
+								<svg xmlns="http://www.w3.org/2000/svg" width="62.857" height="55" viewBox="0 0 62.857 55">
+									<path id="wallet-solid" d="M56.621,43.786H9.821a1.964,1.964,0,0,1,0-3.929H56.964a1.964,1.964,0,0,0,1.964-1.964A5.893,5.893,0,0,0,53.036,32H7.857A7.857,7.857,0,0,0,0,39.857V79.143A7.857,7.857,0,0,0,7.857,87H56.621a6.078,6.078,0,0,0,6.237-5.893V49.679A6.078,6.078,0,0,0,56.621,43.786ZM51.071,69.321A3.929,3.929,0,1,1,55,65.393,3.929,3.929,0,0,1,51.071,69.321Z" transform="translate(0 -32)" fill="#707070"/>
+								</svg>
+							</Flex>
+								<Box w="50%" bg="white" py="20px" px="10px">
+									<Text>Contant</Text>
+									<Text>Kosten: € 0,00</Text>
+								</Box>
+						</Flex>
+
+          <Flex alignItems="end" w="100%">
+            <Button
+              ml="auto"
+              bg="secondary.500"
+              color="white"
+              type="submit"
+              rightIcon="arrow-forward"
+            >
+              Volgende stap
+            </Button>
+          </Flex>
+        </Flex>
+      </form>
+    </>
+  )
+}
+
+export default OrderStepTwo

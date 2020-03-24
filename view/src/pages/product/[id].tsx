@@ -1,11 +1,11 @@
 import { FC, useEffect } from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
-import { Flex } from '@chakra-ui/core'
+import { Flex, Button, Box } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import ProductShow from '../../components/Products/Show'
+import ProductShow from '../../components/products/Show'
 import PreloadFetch from '../../components/Utils/PreloadFetch'
 
 const ProductDetail: FC = () => {

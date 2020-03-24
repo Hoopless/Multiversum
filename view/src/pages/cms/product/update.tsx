@@ -23,6 +23,7 @@ const ProductUpdate: FC = () => {
   const router = useRouter()
   const { id } = router.query
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const product: ConsumerProduct = useSWR(
     id ? `/product?id=${id}` : null,
@@ -89,6 +90,7 @@ const ProductUpdate: FC = () => {
     console.log(await formRes.json())
 
     setIsSubmitting(false)
+    setIsSubmitted(true)
   }
 
   if (!product) {
@@ -112,7 +114,8 @@ const ProductUpdate: FC = () => {
             {id &&
               product &&
               ProductValueTypes.map(productValueType => {
-                const productValue = (productForm.values && productForm.values[productValueType.id])
+                const productValue =
+                  productForm.values && productForm.values[productValueType.id]
                 if (productValue === undefined) {
                   return
                 }
@@ -203,16 +206,21 @@ const ProductUpdate: FC = () => {
                 )
               })}
 
-            <Button
-              ml="auto"
-              bg="secondary.500"
-              isLoading={isSubmitting}
-              onClickCapture={() => {
-                submitForm(productForm.values)
-              }}
-            >
-              Update
-            </Button>
+            <>
+              {isSubmitted && (
+                <Text color="secondary.500">Prodct is güpdate</Text>
+              )}
+              <Button
+                ml="auto"
+                bg="secondary.500"
+                isLoading={isSubmitting}
+                onClickCapture={() => {
+                  submitForm(productForm.values)
+                }}
+              >
+                Update
+              </Button>
+            </>
           </Flex>
         </form>
       </FlexBox>

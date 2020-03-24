@@ -3,7 +3,7 @@ import Head from 'next/head'
 import useSWR from 'swr'
 import CMSHeader from "../../components/cms/header"
 import { Flex, Box, Text, Button } from '@chakra-ui/core'
-import { FaEdit } from 'react-icons/fa'
+import { FaPlus, FaListUl, FaEdit } from 'react-icons/fa'
 import PreloadFetch from '../../components/Utils/PreloadFetch'
 import styled from '@emotion/styled'
 import FlexBox from '../../components/shared/FlexBox'
@@ -12,7 +12,6 @@ import Link from 'next/link'
 
 
 const CMSOverview: FC = () => {
-
 
   return (
 
@@ -29,41 +28,45 @@ const CMSOverview: FC = () => {
 
         <Flex>
           <Text fontSize="xl" mb="0.75rem" fontWeight="bold">Snel menu</Text>
-          <Box ml='auto'>
-            <Link href={'/cms/product/create'}>
-              <Button rightIcon="add" bg='secondary.500' color='white' size="sm">Nieuw</Button>
-            </Link>
-          </Box>
+
         </Flex>
 
-        <Flex align="center" justifyContent="center" wrap="wrap">
+        <Flex wrap="wrap">
 
-            <Flex w='50%' wrap="wrap" justifyContent="center">
-                <Text fontSize="lg" mb="0.75rem">Producten</Text>
-                <Box w="100%">
-                    Nieuw product aanmaken <br/>
-                    <Link href={'/cms/product/create'}>
-                        <Button rightIcon="add" bg='secondary.500' color='white' size="sm">Nieuw</Button>
-                    </Link>
+        <Link href={'/cms/product/create'}>
+            <Flex mx="5px" w="25%" h="150px" bg="#bebebe" p="10px" justifyContent="center" align="center" wrap="wrap">
+                <Flex w='100%' justifyContent="center">
+                    <FaPlus size="4rem" />
+                </Flex>
+                <Box w="100%" textAlign="center">
+                    Nieuw product aanmaken
                 </Box>
-                <Box w="100%">
-                    producten overzicht en bewerken<br/>
-                    <Link href={'/cms/product/create'}>
-                        <Button rightIcon="add" bg='secondary.500' color='white' size="sm">Nieuw</Button>
-                    </Link>
-                </Box>
-
             </Flex>
+        </Link>
 
-            <Flex w='50%' wrap="wrap" justifyContent="center">
-                <Text fontSize="lg" mb="0.75rem">Pagina's</Text>
-                <Box w="100%">
-                    <Link href={'/cms/pages/update'}>
-                        Pagina's bijwerken
-                    </Link>
+        <Link href={'/cms/product/overview'}>
+            <Flex mx="5px" w="25%" h="150px" bg="#bebebe" p="10px" justifyContent="center" align="center" wrap="wrap">
+                <Flex w='100%' justifyContent="center">
+                    <FaListUl size="4rem" />
+                </Flex>
+                <Box w="100%" textAlign="center">
+                    Producten overzicht
                 </Box>
-
             </Flex>
+        </Link>
+
+
+
+        <Link href={'/cms/pages/update'}>
+            <Flex mx="5px" w="25%" h="150px" bg="#bebebe" p="10px" justifyContent="center" align="center" wrap="wrap">
+                <Flex w='100%' justifyContent="center">
+                    <FaEdit size="4rem" />
+                </Flex>
+                <Box w="100%" textAlign="center">
+                    Pagina's bewerken
+                </Box>
+            </Flex>
+        </Link>
 
         </Flex>
 
