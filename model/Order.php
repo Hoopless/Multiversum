@@ -93,7 +93,7 @@ class Order
 			$contact       = $contact->get($item['contact_id']);
 
 			$data[$key]['id']              = (int)$item['id'];
-			$data[$key]['contact_id']      = (int)$item['total_price_inc'];
+			$data[$key]['product']         = $this->getFirstRelationProductName($item['id']);
 			$data[$key]['total_price_inc'] = (float)$item['total_price_inc'];
 			$data[$key]['total_price_inc'] = (float)$item['total_price_inc'];
 			$data[$key]['total_price_ex']  = (float)$item['total_price_ex'];
@@ -101,6 +101,7 @@ class Order
 			$data[$key]['contact_name']    = $contact['firstname'] . " " . $contact['lastname'];
 
 			unset($data[$key]['payment_id']);
+			unset($data[$key]['contact_id']);
 
 		}
 
@@ -143,7 +144,22 @@ class Order
 		return $totalPrice;
 	}
 
-	public function insertRelationProduct($id_product, $id_category)
+	public function getFirstRelationProductName($order_id)
+	{
+		$query = "SELECT products.name FROM product_order JOIN products ON product_order.product_id = products.id WHERE product_order.order_id = :order_id";
+
+		$stmt = $this->dataHandler->preparedQuery($query);
+		$stmt->bindParam(':order_id', $order_id, PDO::PARAM_INT);
+		$stmt->execute();
+
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+		$data = $stmt->fetch();
+
+		return $data['name'];
+	}
+
+	public function insertRelationProduct($id_product, $order_id)
 	{
 		try {
 
@@ -151,7 +167,7 @@ class Order
 
 			$stmt = $this->dataHandler->preparedQuery($query);
 			$stmt->bindParam(':id_product', $id_product, PDO::PARAM_INT);
-			$stmt->bindParam(':order_id', $id_category, PDO::PARAM_INT);
+			$stmt->bindParam(':order_id', $order_id, PDO::PARAM_INT);
 
 			$stmt->execute();
 
