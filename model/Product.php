@@ -169,7 +169,7 @@ class Product
 
 			try {
 
-				$query = "SELECT *  ";
+				$query = "SELECT * ";
 				$query .= "FROM products ";
 				$query .= "WHERE id = :id";
 
@@ -204,32 +204,34 @@ class Product
 		}
 
 		try {
-			$query = Tools::updateQuery(self::$insert_array, "products", $data);
-			$query .= "WHERE id = :id";
+			if (Tools::updateQuery(self::$insert_array, "products", $data)) {
+				$query = Tools::updateQuery(self::$insert_array, "products", $data);
+				$query .= "WHERE id = :id";
 
 
-			$stmt = $this->dataHandler->preparedQuery($query);
+				$stmt = $this->dataHandler->preparedQuery($query);
 
-			$stmt->bindValue(':id', $data['id']);
+				$stmt->bindValue(':id', $data['id']);
 
 
-			foreach (self::$insert_array as $value) {
-				if (isset($data[$value]) && ! empty($data[$value])) {
-					$text = ":" . $value;
+				foreach (self::$insert_array as $value) {
+					if (isset($data[$value]) && ! empty($data[$value])) {
+						$text = ":" . $value;
 
-					switch ($value) {
-						case "in_sale":
-						case "own_display":
-							$stmt->bindValue($text, isset($_POST[$value]) ? $this->checkBoolean($_POST[$value]) : false, PDO::PARAM_BOOL);
-							break;
-						default:
-							$stmt->bindValue($text, isset($data[$value]) ? $data[$value] : NULL);
-							break;
+						switch ($value) {
+							case "in_sale":
+							case "own_display":
+								$stmt->bindValue($text, isset($_POST[$value]) ? $this->checkBoolean($_POST[$value]) : false, PDO::PARAM_BOOL);
+								break;
+							default:
+								$stmt->bindValue($text, isset($data[$value]) ? $data[$value] : NULL);
+								break;
+						}
 					}
 				}
-			}
 
-			$stmt->execute();
+				$stmt->execute();
+			}
 
 
 			//Delete file from Azure & Reupload if there is a file.

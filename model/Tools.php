@@ -37,17 +37,23 @@ class Tools
 	 * @param array  $array
 	 * @param string $table
 	 * @param array  $data
-	 * @return string
+	 * @return string|boolean
 	 */
 	public static function updateQuery($array, $table, $data)
 	{
 		$query = "UPDATE {$table} SET ";
+		$number = 0;
 
 		foreach ($array as $key => $value) {
 			if (isset($data[$value]) && ! empty($data[$value])) {
 				$query .= "{$value} = :{$value} ";
 				($key !== count($array) - 1) ? $query .= ", " : "";
+				$number++;
 			}
+		}
+
+		if ($number === 0){
+			return false;
 		}
 
 		if (preg_match('/, $/', $query)) {
