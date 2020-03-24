@@ -30,6 +30,14 @@ class OrderController
 		return json_encode($data);
 	}
 
+	public function getPaymentMethods()
+	{
+		$data = PaymentMethod::getAllPaymentMethods();
+		header('Content-Type: application/json');
+
+		return json_encode($data);
+	}
+
 	public function getStatsbyMonth()
 	{
 

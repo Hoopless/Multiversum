@@ -52,12 +52,22 @@ class PaymentMethod
 	 */
 	public static function getAllPaymentMethods()
 	{
-		$query = "SELECT id, name, fees, precentage FROM payment_methods";
+		try {
+			$query = "SELECT id, name, fees, percentage FROM payment_methods";
 
-		$dataHandler = new DataHandler($_ENV['DB_HOST'], "mysql", $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DB_PORT']);
-		$data        = $dataHandler->readsData($query);
-		$results     = $data->fetchAll();
+			$dataHandler = new DataHandler($_ENV['DB_HOST'], "mysql", $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DB_PORT']);
+			$data        = $dataHandler->readsData($query);
+			$results     = $data->fetchAll();
 
-		return $results;
+			foreach ($results as $key => $result) {
+				$results[$key]['id']         = (int)$result['id'];
+				$results[$key]['fees']       = (float)$result['fees'];
+				$results[$key]['percentage'] = (float)$result['percentage'];
+			}
+
+			return $results;
+		} catch (Exception $e) {
+			echo $e->getMessage() . "With code: " . $e->getCode();
+		}
 	}
 }

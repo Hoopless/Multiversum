@@ -37,6 +37,10 @@ class RequestController
 				echo $this->order->getStatsbyMonth();
 				break;
 
+			case $this->base_uri . "/payments":
+				echo $this->order->getPaymentMethods();
+				break;
+
 			case $this->base_uri . '/pages':
 				echo $this->page->index();
 				break;
