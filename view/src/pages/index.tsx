@@ -6,18 +6,21 @@ import ProductList from '../components/Homepage/ProductsList'
 import SalesList from '../components/Homepage/SalesList'
 import PreloadFetch from '../components/Utils/PreloadFetch'
 import getPageContent from '../utils/getPageContent'
+import FlexBox from '../components/shared/FlexBox'
 
-interface HomepageData {
-	homepage_title: string
-	homepage_text: string
+export interface HomepageData {
+	header_title: string
+	header_text : string
 }
 
 const HomePage = () => {
-	const { data } = getPageContent<HomepageData>('Homepage')
+	const homepageCMS = getPageContent('Homepage')
 
-	if (!data) {
+	if (!homepageCMS) {
 		return (<></>)
 	}
+
+	const cmsContent = homepageCMS.values
 
 	return (
 		<>
@@ -33,19 +36,16 @@ const HomePage = () => {
 				justifyContent='space-between'>
 				<Header />
 
-				<Flex
-					direction='column'
-					width={['100%', '100%', '100%', '992px']}
-					mx='auto'
-				>
+				<FlexBox>
+
 					<Box px={['20px', '100px', '200px', '100px']}
 						mb='10px'>
 						<Text fontSize='lg'
 							fontWeight='bold'>
-							{data.homepage_title}
+							{cmsContent.header_title}
 						</Text>
 						<Text fontSize='md'>
-							{data.homepage_text}
+							{cmsContent.header_text}
 						</Text>
 						<Text fontSize='lg'
 							fontWeight='bold'
@@ -59,7 +59,7 @@ const HomePage = () => {
 					</Box>
 
 					<ProductList />
-				</Flex>
+				</FlexBox>
 				<Footer />
 			</Flex>
 		</>

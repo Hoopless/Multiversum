@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Header from '../components/Header'
 import { Flex, Text } from '@chakra-ui/core'
 import Footer from '../components/Footer'
+import FlexBox from '../components/shared/FlexBox'
+
 
 const AVPage = () => (
     <>
@@ -13,7 +15,7 @@ const AVPage = () => (
             <Header />
 
 
-            <Flex direction='column' width={['100%', '100%', '100%', '992px']} mx='auto'>
+            <FlexBox>
                 <Text fontSize='xl' fontWeight='bold'>
                     Algemene Voorwaarden
                 </Text>
@@ -93,7 +95,7 @@ const AVPage = () => (
                     Voor vragen kunt u via email contact met ons opnemen:<br/>
                     Multiversum | multiversum@snoozing.dev
                 </Text>
-            </Flex>
+            </FlexBox>
 
             <Footer />
         </Flex>

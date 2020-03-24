@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useFormik } from 'formik'
-import CMSHeader from "../../../components/cms/header";
+import CMSHeader from '../../../components/cms/header';
 import { Flex, Input, Box, Text, Textarea, Checkbox, Stack, Button, FormControl, CheckboxGroup, Switch } from '@chakra-ui/core'
 import { useState, FC, ChangeEvent } from 'react'
 import { FaCheck } from 'react-icons/fa'
@@ -48,23 +48,21 @@ const CMSCreate: FC = () => {
 			image: '',
 			in_sale: false,
 			own_display: false,
-			point_of_view: "",
-			height: "",
-			width: "",
+			point_of_view: '',
+			height: '',
+			width: '',
 
 		},
 		validate: values => {
-			console.log(2)
 			let errors: Partial<FormValues> = {}
 
 			if (values.image !== '' && !values.image) {
-				errors.image = "Geen foto Geselecteerd!"
+				errors.image = 'Geen foto Geselecteerd!'
 			}
 
 			return errors
 		},
 		onSubmit: async (values, helpers) => {
-			console.log(1)
 			const formData = new FormData()
 			formData.append('name', values.name)
 			formData.append('description', values.description)
@@ -105,54 +103,54 @@ const CMSCreate: FC = () => {
 
 			<CMSHeader />
 
-			<Flex width={['100%', '100%', '992px']} mx='auto' flexDirection="column">
+			<Flex width={['100%', '100%', '992px']} mx='auto' flexDirection='column'>
 
 				{lastProductID && (
-					<Flex pb='15px' alignItems="Center" justifyContent="center" w="100%" wrap="wrap" bg="green.100" px="10px" py="5px">
-						<Flex w="80%" alignItems="Center" justifyContent="center">
-							<FaCheck size="30px" color="#1ABC9C" />
+					<Flex pb='15px' alignItems='Center' justifyContent='center' w='100%' wrap='wrap' bg='green.100' px='10px' py='5px'>
+						<Flex w='80%' alignItems='Center' justifyContent='center'>
+							<FaCheck size='30px' color='#1ABC9C' />
 						</Flex>
-						<Text fontSize='sm' color='green.600' w="100%" textAlign="center">Product aangemaakt!</Text>
-						<Box fontSize='sm' color='green.600' w="100%" textAlign="center">Bekijk het product op: <a href={`/product/${lastProductID}`}>Product Informatie</a></Box>
+						<Text fontSize='sm' color='green.600' w='100%' textAlign='center'>Product aangemaakt!</Text>
+						<Box fontSize='sm' color='green.600' w='100%' textAlign='center'>Bekijk het product op: <a href={`/product/${lastProductID}`}>Product Informatie</a></Box>
 					</Flex>
 				)}
 				<form onSubmit={productForm.handleSubmit}>
 					<FormControl >
 
-						<Text fontSize="lg" w="100%" mb="0.75rem" fontWeight="bold">Product toevoegen</Text>
+						<Text fontSize='lg' w='100%' mb='0.75rem' fontWeight='bold'>Product toevoegen</Text>
 
 
-						<Flex w="100%">
+						<Flex w='100%'>
 
-							<Flex w="50%" flexDirection="column">
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Naam</Text>
+							<Flex w='50%' flexDirection='column'>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Naam</Text>
 									<Input
 										isRequired
-										id="name"
-										name="name"
-										type="text"
+										id='name'
+										name='name'
+										type='text'
 										value={productForm.values.name}
 										onChange={productForm.handleChange}
-										size="md"
+										size='md'
 									/>
 								</Box>
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Prijs</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Prijs</Text>
 									<Input
 										isRequired
-										id="price"
-										name="price"
-										type="number"
+										id='price'
+										name='price'
+										type='number'
 										value={productForm.values.price}
 										onChange={productForm.handleChange}
-										size="md"
+										size='md'
 									/>
 								</Box>
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Beschrijving</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Beschrijving</Text>
 									<Textarea
 										id='description'
 										name='description'
@@ -161,28 +159,28 @@ const CMSCreate: FC = () => {
 									/>
 								</Box>
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Platform</Text>
-									<Box bg="white" w="100%" px="10px" py="5px">
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Platform</Text>
+									<Box bg='white' w='100%' px='10px' py='5px'>
 										<Stack spacing={2} isInline >
-											<Checkbox name="platform" id="platform" value="PC" variantColor="green">
+											<Checkbox name='platform' id='platform' value='PC' variantColor='green'>
 												PC
                       </Checkbox>
-											<Checkbox name="platform" id="platform" value="Playsation 4" variantColor="green">
+											<Checkbox name='platform' id='platform' value='Playsation 4' variantColor='green'>
 												Playstation 4
                        </Checkbox>
-											<Checkbox name="platform" id="platform" value="Standalone" variantColor="green">
+											<Checkbox name='platform' id='platform' value='Standalone' variantColor='green'>
 												Standalone
                        </Checkbox>
-											<Checkbox name="platform" id="platform" value="Mobiel" variantColor="green">
+											<Checkbox name='platform' id='platform' value='Mobiel' variantColor='green'>
 												Mobiel
                        </Checkbox>
 										</Stack>
 									</Box>
 								</Box>
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Bijgeleverde info</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Bijgeleverde info</Text>
 									<Textarea
 
 										id='included_info'
@@ -192,9 +190,9 @@ const CMSCreate: FC = () => {
 									/>
 								</Box>
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Foto</Text>
-									<Text mb="2px">Let op! foto die transparent is</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Foto</Text>
+									<Text mb='2px'>Let op! foto die transparent is</Text>
 									<Input
 										isRequired
 										id='image'
@@ -202,174 +200,174 @@ const CMSCreate: FC = () => {
 										onChange={(event: ChangeEvent<HTMLInputElement>) => {
 											productForm.setFieldValue('image', event.currentTarget.files![0])
 										}}
-										type="file"
-										size="md"
+										type='file'
+										size='md'
 									/>
 								</Box>
 							</Flex>
 
-							<Flex w="50%" flexDirection="column">
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Resolutie</Text>
+							<Flex w='50%' flexDirection='column'>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Resolutie</Text>
 									<Input
 										id='resolution'
 										name='resolution'
-										type="text"
+										type='text'
 										value={productForm.values.resolution}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Refresh Rate</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Refresh Rate</Text>
 									<Input
 										id='refresh_rate'
 										name='refresh_rate'
-										type="text"
+										type='text'
 										value={productForm.values.refresh_rate}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Audio Type</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Audio Type</Text>
 									<Input
 										id='audio_type'
 										name='audio_type'
-										type="text"
+										type='text'
 										value={productForm.values.audio_type}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Kleur</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Kleur</Text>
 									<Input
 										id='colour'
 										name='colour'
-										type="text"
+										type='text'
 										value={productForm.values.colour}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
 
 
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Garantie</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Garantie</Text>
 									<Input
 										id='warranty'
 										name='warranty'
-										type="text"
+										type='text'
 										value={productForm.values.warranty}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
 
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Gezichtsveld</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Gezichtsveld</Text>
 									<Input
 										id='point_of_view'
 										name='point_of_view'
-										type="text"
+										type='text'
 										value={productForm.values.point_of_view}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
 
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Hoogte</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Hoogte</Text>
 									<Input
 										id='height'
 										name='height'
-										type="text"
+										type='text'
 										value={productForm.values.height}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Breedte</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Breedte</Text>
 									<Input
 										id='width'
 										name='width'
-										type="text"
+										type='text'
 										value={productForm.values.width}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
 
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Merk</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Merk</Text>
 									<Input
 										id='brand'
 										name='brand'
-										type="text"
+										type='text'
 										value={productForm.values.brand}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">EAN</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>EAN</Text>
 									<Input
 										id='ean'
 										name='ean'
-										type="text"
+										type='text'
 										value={productForm.values.ean}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">SKU</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>SKU</Text>
 									<Input
 										id='sku'
 										name='sku'
-										type="text"
+										type='text'
 										value={productForm.values.sku}
 										onChange={productForm.handleChange}
-										placeholder=""
-										size="md"
+										placeholder=''
+										size='md'
 									/>
 								</Box>
 
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">In de aanbieding?</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>In de aanbieding?</Text>
 									<Switch
 										id='in_sale'
 										name='in_sale'
 										value={productForm.values.in_sale}
 										onChange={productForm.handleChange}
-										size="md"
+										size='md'
 									/>
 								</Box>
-								<Box w="100%" px="15px" mb="10px">
-									<Text mb="2px">Eigen display?</Text>
+								<Box w='100%' px='15px' mb='10px'>
+									<Text mb='2px'>Eigen display?</Text>
 									<Switch
 										id='own_display'
 										name='own_display'
 										value={productForm.values.own_display}
 										onChange={productForm.handleChange}
-										size="md"
+										size='md'
 									/>
 								</Box>
 							</Flex>

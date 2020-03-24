@@ -8,10 +8,10 @@ import getPageContent from '../utils/getPageContent'
 const mapLink    = 'https://www.google.nl/maps/dir/Jan+Pieterszoon+Coenstraat,+Utrecht//@52.0910617,5.0887362,15z/data=!4m9!4m8!1m5!1m1!1s0x47c66f65451cd7b3:0xa52fd8e5ccf60705!2m2!1d5.0975124!2d52.0910488!1m0!3e0?hl=nl'
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 
-interface ContactData {
+export interface ContactData {
 	contact_content: string
-  kvk_number: string
-  btw_number: string
+	kvk_number     : string
+	btw_number     : string
 }
 
 interface FormValues {
@@ -23,8 +23,7 @@ interface FormValues {
 const Contact: FC = () => {
 	const [formSent, setFormSent] = useState(false)
 
-	const { data } = getPageContent<ContactData>('Contact')
-
+	const contactCMS = getPageContent('Contact')
 	const contactForm = useFormik({
 		initialValues: {
 			name: '',
@@ -58,9 +57,11 @@ const Contact: FC = () => {
 		}
 	})
 
-	if (!data) {
+	if (!contactCMS) {
 		return (<></>)
 	}
+
+	const cmsContent = contactCMS.values
 
 	return (
 		<Box pb='10px'>
@@ -127,14 +128,14 @@ const Contact: FC = () => {
 
 					<Box >
 						<Box fontSize='md' pr="10px" whiteSpace='pre-line'>
-							{data.contact_content}
+							{cmsContent.contact_text}
 
 							<br />
 							<Image mt="20px" height="200px" src="https://media.wired.com/photos/59269cd37034dc5f91bec0f1/master/pass/GoogleMapTA.jpg" />
 							<br />
 
-							KvK: {data.kvk_number}<br />
-							BTW-Nummer: {data.btw_number}<br />
+							KvK: {cmsContent.kvk_number}<br />
+							BTW-Nummer: {cmsContent.btw_number}<br />
 						</Box>
 
 					</Box>

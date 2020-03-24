@@ -10,6 +10,7 @@ $trimmed_url = trim($request, '/');
 $url         = explode('?', $trimmed_url, 2);
 
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: *');
 
 require 'controller/RequestController.php';
 

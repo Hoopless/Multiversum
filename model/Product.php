@@ -233,18 +233,18 @@ class Product
 
 
 			//Delete file from Azure & Reupload if there is a file.
-			if (isset($_FILES['image'])) {
+			if (isset($_FILES['image_url'])) {
 				$file_url = $this->getImageURL($data['id']);
 
 				if ($file_url){
 					if ($this->deleteFromAzure($file_url)) {
 						$entryId   = $data['id'];
-						$imageLink = $this->uploadToAzure($_FILES['image'], $entryId);
+						$imageLink = $this->uploadToAzure($_FILES['image_url'], $entryId);
 						$this->updateImage($entryId, $imageLink);
 					}
 				} else {
 					$entryId   = $data['id'];
-					$imageLink = $this->uploadToAzure($_FILES['image'], $entryId);
+					$imageLink = $this->uploadToAzure($_FILES['image_url'], $entryId);
 					$this->updateImage($entryId, $imageLink);
 				}
 			}

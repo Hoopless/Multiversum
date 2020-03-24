@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Navigation from '../Navigation';
 import { Flex, Box, Image, Text } from '@chakra-ui/core'
 
-const cmsHeader: FC = () => (
+const CMSHeader: FC = () => (
 	<Flex
 		width={['100%', '100%', '100%', '992px']}
 		mx='auto'
@@ -24,7 +24,7 @@ const cmsHeader: FC = () => (
 				fontWeight='bold'
 			>
 				Multiversum
-            </Box>
+      </Box>
 		</Flex>
 
 		<Flex w={['100%', '80%', '80%', '80%']}>
@@ -35,12 +35,10 @@ const cmsHeader: FC = () => (
 				mx='auto'
 				wrap='wrap'
 			>
-
 				<Text fontSize='lg'>Beheerders paneel</Text>
-
 			</Flex>
 		</Flex>
 	</Flex>
 )
 
-export default cmsHeader
+export default CMSHeader
