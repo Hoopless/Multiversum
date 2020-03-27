@@ -4,6 +4,7 @@ require 'controller/MailableController.php';
 require 'controller/PageController.php';
 require 'controller/ProductController.php';
 require 'controller/OrderController.php';
+require 'controller/UserController.php';
 require 'model/DataHandler.php';
 require 'model/Tools.php';
 
@@ -16,7 +17,9 @@ class RequestController
 		$this->page     = new PageController();
 		$this->mailable = new MailableController();
 		$this->order    = new OrderController();
+		$this->user     = new UserController();
 		$this->base_uri = "api/v1";
+		session_start();
 
 	}
 
@@ -24,6 +27,13 @@ class RequestController
 	{
 
 		switch ($url) {
+			case $this->base_uri . "/login":
+				echo $this->user->checkOnLogin($_POST);
+				break;
+
+			case $this->base_uri . "/session":
+				echo $this->user->checkSession();
+				break;
 
 			case $this->base_uri . "/order":
 				echo $this->order->create($_POST);
