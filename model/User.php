@@ -53,8 +53,6 @@ class User
 	public function checkedLoggedIn()
 	{
 
-		$string = "Hallo123";
-
 		if ($this->checkSessionSet($_SESSION)) {
 			return [
 				'logged_in' => $_SESSION['logged_in'],
