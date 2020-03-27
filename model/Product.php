@@ -24,6 +24,7 @@ class Product
 		'height',
 		'width',
 		'own_display',
+		'is_active',
 	];
 
 	public function __construct()
@@ -153,6 +154,21 @@ class Product
 		return $value === "true" ? 1 : 0;
 	}
 
+	public function delete($id)
+	{
+		try {
+			$query = "DELETE FROM products WHERE id = :id";
+
+			$stmt = $this->dataHandler->preparedQuery($query);
+			$stmt->bindParam(':id', $id);
+			$stmt->execute();
+
+			return ['message' => "product deleted"];
+		} catch (Exception $e) {
+			echo $e;
+		}
+	}
+
 	/**
 	 * @param Int $id
 	 * @return array
@@ -183,9 +199,10 @@ class Product
 
 				$data = $stmt->fetch();
 
-				$data['id']      = (int)$data['id'];
-				$data['price']   = (float)$data['price'];
-				$data['in_sale'] = (bool)$data['in_sale'];
+				$data['id']        = (int)$data['id'];
+				$data['price']     = (float)$data['price'];
+				$data['in_sale']   = (bool)$data['in_sale'];
+				$data['is_active'] = (bool)$data['is_active'];
 
 
 				return $data;
@@ -238,7 +255,7 @@ class Product
 			if (isset($_FILES['image_url'])) {
 				$file_url = $this->getImageURL($data['id']);
 
-				if ($file_url){
+				if ($file_url) {
 					if ($this->deleteFromAzure($file_url)) {
 						$entryId   = $data['id'];
 						$imageLink = $this->uploadToAzure($_FILES['image_url'], $entryId);

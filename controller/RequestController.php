@@ -98,6 +98,10 @@ class RequestController
 					echo $this->product->update($_PATCH->params);
 				}
 
+				if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
+					echo $this->product->delete($_GET['id']);
+				}
+
 				break;
 
 			case "":
