@@ -237,6 +237,7 @@ class Product
 
 						switch ($value) {
 							case "in_sale":
+							case "is_active":
 							case "own_display":
 								$stmt->bindValue($text, isset($_POST[$value]) ? $this->checkBoolean($_POST[$value]) : false, PDO::PARAM_BOOL);
 								break;
@@ -294,12 +295,13 @@ class Product
 				}
 			}
 
+			$query .= "WHERE is_active = 1 ";
+
 			$limit = isset($_GET["limit"]) ? (int)$_GET["limit"] : 0;
 
 			if ($limit > 0) {
 				$query .= "LIMIT {$limit} ";
 			}
-
 
 			$stmt = $this->dataHandler->preparedQuery($query);
 
