@@ -289,13 +289,18 @@ class Product
 			if (! is_null($sales)) {
 
 				if ($sales) {
-					$query .= "WHERE in_sale = TRUE ";
+					$query .= "WHERE in_sale = TRUE AND";
 				} else {
-					$query .= "WHERE in_sale = FALSE ";
+					$query .= "WHERE in_sale = FALSE AND";
 				}
+
+				$query .= " is_active = 1 ";
+
+			} else {
+				$query .= "WHERE is_active = 1 ";
+
 			}
 
-			$query .= "WHERE is_active = 1 ";
 
 			$limit = isset($_GET["limit"]) ? (int)$_GET["limit"] : 0;
 

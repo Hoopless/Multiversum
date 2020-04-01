@@ -14,9 +14,9 @@ class OrderController
 
 	public function create($data)
 	{
-		$data = $this->order->create($data);
-
 		header('Content-Type: application/json');
+
+		$data = $this->order->create($data);
 
 		return json_encode($data);
 	}
@@ -24,6 +24,10 @@ class OrderController
 	public function getLastOrders()
 	{
 		header('Content-Type: application/json');
+
+		if (! User::checkLoggedIn()) {
+			return json_encode(['message' => "Not logged in"]);
+		}
 
 		$data = $this->order->getLastOrders(10);
 
@@ -40,6 +44,9 @@ class OrderController
 
 	public function getStatsbyMonth()
 	{
+		if (! User::checkLoggedIn()) {
+			return json_encode(['message' => "Not logged in"]);
+		}
 
 		$year = \Carbon\Carbon::now()->year;
 

@@ -30,6 +30,10 @@ class PageController
 
 	public function update($data)
 	{
+		if (! User::checkLoggedIn()) {
+			return json_encode(['message' => "Not logged in"]);
+		}
+
 		$data = $this->pageModel->update($data);
 
 		return json_encode($data);

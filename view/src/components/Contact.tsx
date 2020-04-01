@@ -65,8 +65,7 @@ const Contact: FC = () => {
 	const cmsContent = contactCMS.values
 
 	return (
-		<Box pb='10px'>
-			<Flex width={['100%', '100%', '100%', '992px']} mx='auto' wrap='wrap'>
+			<Flex width={['100%', '100%', '100%', '992px']} mx='auto' wrap='wrap' bg="background" px="40px" pb="10px" height="90vh">
 
 				<BackButton />
 
@@ -145,7 +144,6 @@ const Contact: FC = () => {
 					</Box>
 				</Box>
 			</Flex>
-		</Box>
 	)
 };
 

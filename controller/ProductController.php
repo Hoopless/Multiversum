@@ -43,6 +43,9 @@ class ProductController
 
 	public function update($data)
 	{
+		if (! User::checkLoggedIn()) {
+			return json_encode(['message' => "Not logged in"]);
+		}
 
 		if (! $this->product->update($data)) {
 			$id_product = $data["id"];
@@ -56,6 +59,10 @@ class ProductController
 
 	public function delete($data)
 	{
+		if (! User::checkLoggedIn()) {
+			return json_encode(['message' => "Not logged in"]);
+		}
+
 		$data = $this->product->delete($data);
 
 		return json_encode($data);
@@ -63,6 +70,10 @@ class ProductController
 
 	public function create()
 	{
+		if (! User::checkLoggedIn()) {
+			return json_encode(['message' => "Not logged in"]);
+		}
+
 		header('Content-Type: application/json');
 
 		$product = new Product;

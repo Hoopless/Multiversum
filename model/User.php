@@ -89,4 +89,15 @@ class User
 		return false;
 
 	}
+
+	public static function checkLoggedIn()
+	{
+		if (isset($_SESSION['logged_in'])) {
+			if ($_SESSION['logged_in']){
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

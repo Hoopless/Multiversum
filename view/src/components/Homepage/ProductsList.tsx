@@ -17,6 +17,7 @@ const ProductList: FC = () => {
       <Flex
         direction='column'
         width={['100%', '100%', '100%']}
+
         mx='auto'
       >
           <Text fontSize='lg' mx='auto' fontWeight='bold' mb='10px'>
@@ -24,14 +25,14 @@ const ProductList: FC = () => {
           </Text>
         {data && (
           <>
-            <Flex mx='auto' wrap="wrap"  justifyContent="center">
+            <Flex mx={['auto', 'auto', 'auto','-50px']} wrap="wrap"  justifyContent="center">
               {data.slice(0, 5).map((product: ConsumerProduct) => (
                 <Box key={product.id} mx='0.75rem'>
                   <ProductCard product={product} />
                 </Box>
               ))}
             </Flex>
-            <Flex py='2.5rem' mx='auto' justifyContent="center" wrap="wrap">
+            <Flex py='2.5rem' mx={['auto', 'auto', 'auto','-50px']} justifyContent="center" wrap="wrap">
               {data.slice(5, 10).map((product: ConsumerProduct) => (
                 <Box key={product.id} mx='0.75rem'>
                   <ProductCard sale={product.in_sale}  product={product} />

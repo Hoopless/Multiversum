@@ -16,7 +16,7 @@ const Header: FC = () => (
     width={['100%', '100%', '100%', '992px']}
     mx='auto'
     wrap='wrap'
-    mt='10px'
+	bg="background"
   >
     <Flex
       direction='column'

@@ -7,6 +7,11 @@ import SalesList from '../components/Homepage/SalesList'
 import PreloadFetch from '../components/Utils/PreloadFetch'
 import getPageContent from '../utils/getPageContent'
 import FlexBox from '../components/shared/FlexBox'
+import styled from '@emotion/styled'
+
+const BackgroundImage = styled.div`
+	background-image: url('/img/pattern.png');
+`;
 
 export interface HomepageData {
 	header_title: string
@@ -31,9 +36,10 @@ const HomePage = () => {
 				<PreloadFetch apiPath='/page?id=1' />
 			</Head>
 
+			<BackgroundImage>
 			<Flex direction='column'
 				minHeight='100vh'
-				justifyContent='space-between'>
+				>
 				<Header />
 
 				<FlexBox>
@@ -59,9 +65,12 @@ const HomePage = () => {
 					</Box>
 
 					<ProductList />
-				</FlexBox>
+
+					</FlexBox>
+
 				<Footer />
 			</Flex>
+			</BackgroundImage>
 		</>
 	)
 }
