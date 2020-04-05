@@ -18,7 +18,8 @@ export interface ConsumerProduct {
 	point_of_view: string
 	height: string
 	width: string
-	own_display: string
+  own_display: string
+  is_active: boolean
 }
 
 export const ProductValueTypes: {
@@ -135,5 +136,11 @@ export const ProductValueTypes: {
 		type    : 'boolean',
 		required: false
   },
+  {
+	id      : 'is_active',
+	name    : 'Actief in verkoop',
+	type    : 'boolean',
+	required: false
+},
 
 ]

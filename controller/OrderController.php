@@ -19,7 +19,16 @@ class OrderController
 		$data = $this->order->create($data);
 
 		return json_encode($data);
-	}
+  }
+
+  public function getStatus ($data)
+  {
+    header('Content-Type: application/json');
+
+    $data = $this->order->getStatus($data);
+
+    return json_encode($data);
+  }
 
 	public function getLastOrders()
 	{

@@ -12,13 +12,15 @@ class Order
 		'total_price_inc',
 		'total_price_ex',
 		'payment_id',
-		'ordered_date',
+    'ordered_date',
+    'mollie_id'
 	];
 
 	public function __construct()
 	{
 		$this->dataHandler = new DataHandler($_ENV['DB_HOST'], "mysql", $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DB_PORT']);
-
+    $this->mollie = new \Mollie\Api\MollieApiClient();
+    $this->mollie->setApiKey($_ENV['MOLLIE_KEY']);
 	}
 
 	public function get($id)
@@ -36,7 +38,41 @@ class Order
 		$data = $stmt->fetchAll();
 
 		return $data;
-	}
+  }
+
+  public function getStatus ($data)
+  {
+    if (!isset($data['id'])) {
+      return [
+        'message' => 'Missing order ID'
+      ];
+    }
+
+    $orderId = $data['id'];
+    $order   = $this->get($orderId);
+
+    if (!isset($order[0])) {
+      return [
+        'message' => 'Unknown order'
+      ];
+    }
+
+    $order    = $order[0];
+    $response = [
+      'id'                => $order['id'],
+      'payment_method_id' => $order['payment_id']
+    ];
+
+    // Check mollie payment
+    if (isset($order['mollie_id'])) {
+      $mollieId = $order['mollie_id'];
+      $molliePayment = $this->mollie->payments->get($mollieId);
+
+      $response['mollie_status'] = $molliePayment->status;
+    }
+
+    return $response;
+  }
 
 	public function create($data)
 	{
@@ -53,22 +89,46 @@ class Order
 		$data['contact_id']      = $id_contact;
 		$data['price']           = $this->calculateTotalPrice($data["product_id"]);
 		$data['total_price_inc'] = $data['price'];
-		$data['total_price_ex']  = ($data['price'] * 0.79);
+    $data['total_price_ex']  = ($data['price'] * 0.79);
+
+    // Mollie payment
+    $paymentLink;
+    if ($data['payment_id'] === '2') {
+      $molliePayment = $this->mollie->payments->create([
+        "amount" => [
+          "currency" => "EUR",
+          "value" => number_format($data['price'] + 0.30, 2)
+        ],
+        "description" => "Multiversum payment #{$id_contact}",
+        "redirectUrl" => "{$_ENV['BASE_URL']}/order/processing?orderId=51"
+      ]);
+
+      $paymentLink = $molliePayment->getCheckoutUrl();
+      $data['mollie_id'] = $molliePayment->id;
+    }
 
 		$data['ordered_date'] = \Carbon\Carbon::now()->toDateTimeString();
 
 		$id_order = $this->insertOrder($data);
 
-		$this->insertRelationProduct($data['product_id'], $id_order);
+    $this->insertRelationProduct($data['product_id'], $id_order);
 
-		$mailable = new Mailable();
-		$mail     = $mailable->sendConfirmationMail($data['email'], $data, $id_order);
 
-		return [
+
+		// $mailable = new Mailable();
+    // $mail     = $mailable->sendConfirmationMail($data['email'], $data, $id_order);
+
+    $response = [
 			'message'    => "Successfully registerd order.",
 			'order_id'   => (int)$id_order,
 			'contact_id' => (int)$id_contact,
-		];
+    ];
+
+    if (isset($paymentLink)) {
+      $response['paymentLink'] = $paymentLink;
+    }
+
+		return $response;
 	}
 
 	public function getLastOrders($limit = NULL)

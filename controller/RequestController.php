@@ -18,7 +18,7 @@ class RequestController
 		$this->mailable = new MailableController();
 		$this->order    = new OrderController();
 		$this->user     = new UserController();
-		$this->base_uri = "api/v1";
+    $this->base_uri = "api/v1";
 		session_start();
 
 	}
@@ -37,7 +37,11 @@ class RequestController
 
 			case $this->base_uri . "/order":
 				echo $this->order->create($_POST);
-				break;
+        break;
+
+      case $this->base_uri . "/order/status":
+        echo $this->order->getStatus($_GET);
+        break;
 
 			case $this->base_uri . "/orders/last":
 				echo $this->order->getLastOrders();
@@ -113,6 +117,16 @@ class RequestController
 				$assetURL = "./view/build/{$url}";
 				$yesURL   = "./view/build/{$decoded}";
 				$htmlURL  = "./view/build/{$url}.html";
+
+
+				$expode_url = explode('/', $url);
+
+				if ($expode_url[0] === "cms" ){
+					if (! User::checkLoggedIn()) {
+						header("Location: /login");
+						exit;
+					}
+				}
 
 				if (file_exists($htmlURL)) {
 					$contentType = mime_content_type($htmlURL);

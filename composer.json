@@ -6,6 +6,7 @@
         "sendgrid/sendgrid": "^7.4",
         "guzzlehttp/guzzle": "^6.5",
         "notihnio/php-request-parser": "1.0.0",
-        "nesbot/carbon": "^2.31"
+        "nesbot/carbon": "^2.31",
+        "mollie/mollie-api-php": "^2.0"
     }
 }

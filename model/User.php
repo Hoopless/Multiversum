@@ -34,7 +34,14 @@ class User
 		$stmt->execute();
 
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
-		$data = $stmt->fetch();
+    $data = $stmt->fetch();
+
+		if (! $data) {
+			return [
+				'logged_in' => false,
+				'error'     => 'Foutief e-mail of wachtwoord ingevoerd.',
+			];
+		}
 
 		if ($this->checkPassword($password, $data['id'])) {
 			return [
