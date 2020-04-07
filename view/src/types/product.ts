@@ -137,10 +137,9 @@ export const ProductValueTypes: {
 		required: false
   },
   {
-	id      : 'is_active',
-	name    : 'Actief in verkoop',
-	type    : 'boolean',
-	required: false
-},
-
+    id      : 'is_active',
+    name    : 'Actief in verkoop',
+    type    : 'boolean',
+    required: false
+  }
 ]

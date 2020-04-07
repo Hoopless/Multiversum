@@ -12,15 +12,15 @@ class Order
 		'total_price_inc',
 		'total_price_ex',
 		'payment_id',
-    'ordered_date',
-    'mollie_id'
+		'ordered_date',
+		'mollie_id'
 	];
 
 	public function __construct()
 	{
 		$this->dataHandler = new DataHandler($_ENV['DB_HOST'], "mysql", $_ENV['DB_DATABASE'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DB_PORT']);
-    $this->mollie = new \Mollie\Api\MollieApiClient();
-    $this->mollie->setApiKey($_ENV['MOLLIE_KEY']);
+		$this->mollie = new \Mollie\Api\MollieApiClient();
+		$this->mollie->setApiKey($_ENV['MOLLIE_KEY']);
 	}
 
 	public function get($id)
@@ -40,7 +40,38 @@ class Order
 		return $data;
   }
 
-  public function getStatus ($data)
+  private function isMailSend($id){
+		$query = "SELECT mail_send FROM orders WHERE id = :id";
+
+		$stmt = $this->dataHandler->preparedQuery($query);
+		$stmt->bindParam(':id', $order_id, PDO::PARAM_INT);
+		$stmt->execute();
+
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+		$data = $stmt->fetch();
+
+		return $data;
+  }
+
+  private function updateMailSend($id){
+
+	try {
+		$query = "UPDATE orders SET mail_send = TRUE WHERE id = :id_order ";
+
+		$stmt = $this->dataHandler->preparedQuery($query);
+		$stmt->bindParam(':id_order', $id, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		return true;
+	} catch (Exception $e){
+		return false;
+	}
+
+  }
+
+  public function getStatus($data)
   {
     if (!isset($data['id'])) {
       return [
@@ -49,7 +80,20 @@ class Order
     }
 
     $orderId = $data['id'];
-    $order   = $this->get($orderId);
+	$order   = $this->get($orderId);
+
+	if ($this->isMailSend($orderId)){
+
+		$contact_modal = new Contact();
+		$contact = $contact_modal->get($order['contact_id']);
+
+		$mailable = new Mailable();
+		$mail     = $mailable->sendConfirmationMail($contact['email'], $data, $id_order);
+
+		if	($mail){
+			$this->updateMailSend($orderId);
+		}
+	}
 
     if (!isset($order[0])) {
       return [
@@ -89,7 +133,13 @@ class Order
 		$data['contact_id']      = $id_contact;
 		$data['price']           = $this->calculateTotalPrice($data["product_id"]);
 		$data['total_price_inc'] = $data['price'];
-    $data['total_price_ex']  = ($data['price'] * 0.79);
+	$data['total_price_ex']  = ($data['price'] * 0.79);
+
+	$data['ordered_date'] = \Carbon\Carbon::now()->toDateTimeString();
+
+	$id_order = $this->insertOrder($data);
+	$this->insertRelationProduct($data['product_id'], $id_order);
+
 
     // Mollie payment
     $paymentLink;
@@ -100,35 +150,27 @@ class Order
           "value" => number_format($data['price'] + 0.30, 2)
         ],
         "description" => "Multiversum payment #{$id_contact}",
-        "redirectUrl" => "{$_ENV['BASE_URL']}/order/processing?orderId=51"
+        "redirectUrl" => "{$_ENV['BASE_URL']}/order/processing?orderId={$id_order}"
       ]);
 
       $paymentLink = $molliePayment->getCheckoutUrl();
       $data['mollie_id'] = $molliePayment->id;
-    }
+	}
 
-		$data['ordered_date'] = \Carbon\Carbon::now()->toDateTimeString();
+		if ($this->updateOrderAfterPaid($data, $id_order)){
 
-		$id_order = $this->insertOrder($data);
+			$response = [
+				'message'    => "Successfully registered order.",
+				'order_id'   => (int)$id_order,
+				'contact_id' => (int)$id_contact,
+			];
 
-    $this->insertRelationProduct($data['product_id'], $id_order);
+			if (isset($paymentLink)) {
+        $response['paymentLink'] = $paymentLink;
+			}
 
-
-
-		// $mailable = new Mailable();
-    // $mail     = $mailable->sendConfirmationMail($data['email'], $data, $id_order);
-
-    $response = [
-			'message'    => "Successfully registerd order.",
-			'order_id'   => (int)$id_order,
-			'contact_id' => (int)$id_contact,
-    ];
-
-    if (isset($paymentLink)) {
-      $response['paymentLink'] = $paymentLink;
-    }
-
-		return $response;
+      return $response;
+		}
 	}
 
 	public function getLastOrders($limit = NULL)
@@ -217,6 +259,22 @@ class Order
 		$data = $stmt->fetch();
 
 		return $data['name'];
+	}
+
+	public function updateOrderAfterPaid($data, $id_order){
+		try {
+			$query = "UPDATE orders SET mollie_id = :mollie_id WHERE id = :id_order ";
+
+			$stmt = $this->dataHandler->preparedQuery($query);
+			$stmt->bindParam(':id_order', $id_order, PDO::PARAM_INT);
+			$stmt->bindParam(':mollie_id', $data['mollie_id']);
+
+			$stmt->execute();
+
+			return true;
+		} catch (Exception $e){
+			return false;
+		}
 	}
 
 	public function insertRelationProduct($id_product, $order_id)

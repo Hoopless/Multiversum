@@ -37,11 +37,11 @@ class RequestController
 
 			case $this->base_uri . "/order":
 				echo $this->order->create($_POST);
-        break;
+        		break;
 
-      case $this->base_uri . "/order/status":
-        echo $this->order->getStatus($_GET);
-        break;
+			case $this->base_uri . "/order/status":
+				echo $this->order->getStatus($_GET);
+				break;
 
 			case $this->base_uri . "/orders/last":
 				echo $this->order->getLastOrders();
@@ -131,7 +131,6 @@ class RequestController
 				if (file_exists($htmlURL)) {
 					$contentType = mime_content_type($htmlURL);
 					header("Content-Type: {$contentType}");
-					header("FuckMy: Life");
 
 					require $htmlURL;
 					exit;
@@ -139,7 +138,6 @@ class RequestController
 				if (file_exists($assetURL)) {
 					$contentType = mime_content_type($assetURL);
 					header("Content-Type: {$contentType}");
-					header("Fuck: PHP");
 
 					require $assetURL;
 					exit;
@@ -147,7 +145,6 @@ class RequestController
 				if (file_exists($yesURL)) {
 					$contentType = mime_content_type($yesURL);
 					header("Content-Type: {$contentType}");
-					header("FuckMy: Life");
 
 					require $yesURL;
 					exit;

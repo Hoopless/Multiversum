@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Head from 'next/head'
 import useSWR from 'swr'
 import CMSHeader from "../../../components/cms/header"
-import { Flex, Box, Text, Button } from '@chakra-ui/core'
+import { Flex, Box, Text, Button, useToast } from '@chakra-ui/core'
 import { swrFetcherJSON } from '../../../utils/apiClient'
 import { FaEdit } from 'react-icons/fa'
 import PreloadFetch from '../../../components/Utils/PreloadFetch'
@@ -12,24 +12,43 @@ import { ConsumerProduct } from '../../../types/product'
 import Link from 'next/link'
 
 const OverviewTable = styled.table`
-
   tr th {
-        text-align: left;
-    }
-
+    text-align: left;
+  }
 `
 
-
 const ProductOverview: FC = () => {
-    const { data } = useSWR('/products', swrFetcherJSON, {
-		loadingTimeout: 0,
-		onError: (err) => console.error('Error SWR', err),
-		onLoadingSlow: () => console.log('Loading slow SWR')
-		})
+  const toast = useToast()
+  const swr = useSWR('/products', swrFetcherJSON, {
+    loadingTimeout: 0,
+    onError: (err) => console.error('Error SWR', err),
+    onLoadingSlow: () => console.log('Loading slow SWR')
+  })
 
-		if (!data) {
-			return <></>
-		}
+  if (!swr.data) {
+    return <></>
+  }
+
+  const deleteProduct = async (id: number) => {
+    const res = await fetch(`${process.env.API_URL}/product?id=${id}`)
+
+    if (res.status !== 200) {
+      return toast({
+        title      : 'Er is iets fout gegaan..',
+        description: 'Probeer later opnieuw',
+        duration   : 10000,
+        isClosable : true,
+        status     : 'error'
+      })
+    }
+    toast({
+      title     : 'Product is verwijderd',
+      duration  : 10000,
+      isClosable: true,
+      status    : 'success'
+    })
+    await swr.revalidate()
+  }
 
   return (
 
@@ -60,13 +79,18 @@ const ProductOverview: FC = () => {
             <th>Naam</th>
             <th></th>
           </thead>
-          {data.map((currentProduct: ConsumerProduct) => (
+          {swr.data.map((currentProduct: ConsumerProduct) => (
             <tbody key={currentProduct.id}>
               <td># {currentProduct.id}</td>
               <td>{currentProduct.name}</td>
               <td>
                 <Link href={`/cms/product/update?id=${currentProduct.id}`}>
-                  <Button rightIcon="edit" ml='auto' bg='contrast.500' color='white' size="sm">Bewerken</Button>
+                  <Button rightIcon="edit" ml='auto' bg='contrast.500' color='white' size="sm">
+                    Bewerken
+                  </Button>
+                  <Button onClick={() => deleteProduct(currentProduct.id)} rightIcon="edit" ml='auto' bg='contrast.500' color='white' size="sm">
+                    Verwijderen
+                  </Button>
                 </Link>
               </td>
             </tbody>
@@ -79,6 +103,6 @@ const ProductOverview: FC = () => {
     </>
 
   )
-};
+}
 
 export default ProductOverview
