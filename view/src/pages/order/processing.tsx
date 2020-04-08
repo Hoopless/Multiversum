@@ -18,11 +18,15 @@ const OrderProcessing = ({ }) => {
     return <></>
   }
 
+  const isPaid = orderStatus.payment_method_id === '1' ? true : (
+    orderStatus.mollie_status === 'paid' ? true : false
+  )
+
   return (
     <>
       <Head>
         <title>
-          {orderStatus.mollie_status === 'paid' ? 'Order geplaatst - Bedankt voor uw bestelling!' : 'Order niet doorgegaan - Probeer opnieuw!'}
+          {isPaid ? 'Order geplaatst - Bedankt voor uw bestelling!' : 'Order niet doorgegaan - Probeer opnieuw!'}
         </title>
       </Head>
 
@@ -33,7 +37,7 @@ const OrderProcessing = ({ }) => {
 
         <FlexBox>
           {
-            orderStatus.mollie_status === 'paid' ?
+            isPaid ?
               (
                 <>
                   <Flex w="100%" justifyContent="center" align="center">
@@ -59,7 +63,7 @@ const OrderProcessing = ({ }) => {
                   </Flex>
                   <Box w="100%" textAlign="center">
                     <Text fontSize="lg" fontWeight="bold" my="20px" mt="30px">Jammer! er is iets misgegaan. Probeer opnieuw.</Text>
-                    <Text fontSize="md" my="10px">Er is iets misgegeaan met het betalen, probeer alstublieft opnieuw een order aan maken.</Text>
+                    <Text fontSize="md" my="10px">Er is iets misgegaan met het betalen, probeer alstublieft opnieuw een order aan maken.</Text>
                   </Box>
                 </>
               )

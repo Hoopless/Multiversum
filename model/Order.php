@@ -84,18 +84,6 @@ class Order
     $orderId = $data['id'];
     $order   = $this->get($orderId);
 
-    if ($this->isMailSend($orderId)) {
-
-      $contact_modal = new Contact();
-      $contact       = $contact_modal->get($order['contact_id']);
-
-      $mailable = new Mailable();
-      $mail     = $mailable->sendConfirmationMail($contact['email'], $data, $orderId);
-
-      if ($mail) {
-        $this->updateMailSend($orderId);
-      }
-    }
 
     if (! isset($order[0])) {
       return [
@@ -109,12 +97,33 @@ class Order
       'payment_method_id' => $order['payment_id'],
     ];
 
+    $mailable = true;
+
     // Check mollie payment
     if (isset($order['mollie_id'])) {
       $mollieId      = $order['mollie_id'];
       $molliePayment = $this->mollie->payments->get($mollieId);
 
       $response['mollie_status'] = $molliePayment->status;
+
+      if ($response['mollie_status'] !== "paid" ){
+        $mailable = false;
+      }
+    }
+
+    if  ($mailable){
+      if ($this->isMailSend($orderId)) {
+
+        $contact_modal = new Contact();
+        $contact       = $contact_modal->get($order['contact_id']);
+
+        $mailable = new Mailable();
+        $mail     = $mailable->sendConfirmationMail($contact['email'], $data, $orderId);
+
+        if ($mail) {
+          $this->updateMailSend($orderId);
+        }
+      }
     }
 
     return $response;

@@ -30,7 +30,9 @@ const ProductOverview: FC = () => {
   }
 
   const deleteProduct = async (id: number) => {
-    const res = await fetch(`${process.env.API_URL}/product?id=${id}`)
+    const res = await fetch(`${process.env.API_URL}/product?id=${id}`, {
+      method: 'DELETE'
+    })
 
     if (res.status !== 200) {
       return toast({
@@ -85,12 +87,18 @@ const ProductOverview: FC = () => {
               <td>{currentProduct.name}</td>
               <td>
                 <Link href={`/cms/product/update?id=${currentProduct.id}`}>
-                  <Button rightIcon="edit" ml='auto' bg='contrast.500' color='white' size="sm">
-                    Bewerken
-                  </Button>
-                  <Button onClick={() => deleteProduct(currentProduct.id)} rightIcon="edit" ml='auto' bg='contrast.500' color='white' size="sm">
-                    Verwijderen
-                  </Button>
+                  <>
+                    <Flex>
+                      <Button marginLeft='1rem' rightIcon="edit" ml='auto' bg='contrast.500' color='white' size="sm">
+                        Bewerken
+                      </Button>
+                      <Box marginLeft='1rem'>
+                        <Button onClick={() => deleteProduct(currentProduct.id)} rightIcon="edit" ml='auto' bg='red.500' color='white' size="sm">
+                          Verwijderen
+                        </Button>
+                      </Box>
+                    </Flex>
+                  </>
                 </Link>
               </td>
             </tbody>

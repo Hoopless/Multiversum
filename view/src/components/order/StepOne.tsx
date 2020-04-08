@@ -2,7 +2,7 @@ import { FC } from 'react'
 import StepTitle from './StepTitle'
 import { useState } from 'react'
 import { useFormik } from 'formik'
-import { Box, Text, Input, Flex, Button, Checkbox } from '@chakra-ui/core'
+import { Box, Text, Input, Flex, Button, Checkbox, useToast } from '@chakra-ui/core'
 import Router from 'next/router'
 import { FaCreditCard, FaWallet } from 'react-icons/fa'
 
@@ -35,6 +35,7 @@ const OrderStepOne: FC<{
   next: () => void
   productId: string
 }> = ({ productId }) => {
+  const toast                     = useToast()
   const [orderSent, setOrderSent] = useState(false)
 
   const infoForm = useFormik({
@@ -64,21 +65,29 @@ const OrderStepOne: FC<{
       formData.append('email', infoForm.values.email)
       formData.append('phone', infoForm.values.phone)
 
-      const formRes = await fetch(`${process.env.API_URL}/order `, {
-        method: 'POST',
-        body: formData
-      })
+      try {
+        const formRes = await fetch(`${process.env.API_URL}/order `, {
+          method: 'POST',
+          body: formData
+        })
 
-      if (formRes.status !== 200) {
-        return
-      }
+        const response = await formRes.json()
 
-      const response = await formRes.json()
-
-      if (response.paymentLink) {
-        window.location.href = response.paymentLink
-      } else {
-        Router.push(`/order/processing?orderId=${response.order_id}`)
+        if (response.paymentLink) {
+          window.location.href = response.paymentLink
+        } else {
+          Router.push(`/order/processing?orderId=${response.order_id}`)
+        }
+      } catch (error) {
+        if (error.status === 400) {
+          toast({
+            title: 'Foutiefe informatie',
+            description: 'Check of uw info correct is en goed is geformatteerd.',
+            status: 'error',
+            duration: 1000 * 20,
+            isClosable: true
+          })
+        }
       }
     },
   })

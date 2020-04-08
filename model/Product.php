@@ -165,6 +165,7 @@ class Product
 
 			return ['message' => "product deleted"];
 		} catch (Exception $e) {
+      http_response_code(500);
 			echo $e;
 		}
 	}
@@ -298,7 +299,6 @@ class Product
 
 			} else {
 				$query .= "WHERE is_active = 1 ";
-
 			}
 
 
