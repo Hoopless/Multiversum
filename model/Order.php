@@ -45,7 +45,7 @@ class Order
     $query = "SELECT mail_send FROM orders WHERE id = :id";
 
     $stmt = $this->dataHandler->preparedQuery($query);
-    $stmt->bindParam(':id', $order_id, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
 
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
